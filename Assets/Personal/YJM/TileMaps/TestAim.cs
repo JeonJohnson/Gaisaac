@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CamCtrl : MonoBehaviour
+public class TestAim : MonoBehaviour
 {
     Vector2 mousePos;
     Player player;

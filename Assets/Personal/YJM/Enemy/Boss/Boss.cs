@@ -78,20 +78,9 @@ public class Boss : Enemy
         timer -= Time.deltaTime;
         if (timer < 0f)
         {
-            if (curTeleportTicket <= 0)
-            {
-                curTeleportTicket = teleportTicket;
-                status = eBossStatus.Teleport;
-                timer = 1.5f;
-                StartCoroutine(FadeCoro(false));
-            }
-            else
-            {
                 status = eBossStatus.Attack;
                 timer = 4f;
                 weapon.ShootBullet();
-                curTeleportTicket--;
-            }
         }
 
         if (Vector3.Distance(this.transform.position, target.transform.position) > shootingDistance)

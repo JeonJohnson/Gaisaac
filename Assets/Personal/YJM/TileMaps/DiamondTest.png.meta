@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a821f5ac94884c4459923f9d72906c72
+guid: 3e346c2cde0894f419a2f7d67b1d1909
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 30
+  spritePixelsToUnits: 10
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TestWall_0
+      name: DiamondTest_0
       rect:
         serializedVersion: 2
         x: 0
@@ -124,14 +124,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f12c7ac895496b54882112079be45387
-      internalID: 2021890683
+      spriteID: daa7055668320d54daec2c18ebf910d4
+      internalID: 2121854568
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TestWall_1
+      name: DiamondTest_1
       rect:
         serializedVersion: 2
         x: 21
@@ -145,14 +145,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 129aea0a1a673ca4f994e503ca5e04bf
-      internalID: -777720693
+      spriteID: 9825cad1d4338654a88b3075954b385a
+      internalID: -422809997
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TestWall_2
+      name: DiamondTest_2
       rect:
         serializedVersion: 2
         x: 43
@@ -166,14 +166,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7bd32e7f329c9694fa344b08276ec34a
-      internalID: -1545822007
+      spriteID: 17cc8038214ee344da29ac10c5a6a776
+      internalID: 769750954
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TestWall_3
+      name: DiamondTest_3
       rect:
         serializedVersion: 2
         x: 0
@@ -187,14 +187,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a22814bdc3ddd3248a2faf97c9f44e4a
-      internalID: -414043446
+      spriteID: b36932dd346eed44ea99f4ce14b7101b
+      internalID: -593155205
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TestWall_4
+      name: DiamondTest_4
       rect:
         serializedVersion: 2
         x: 21
@@ -208,14 +208,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4c738b8d6a8044b47a39390e3cc877ca
-      internalID: -1306173334
+      spriteID: db4b7c1335b8f2c46958b9621f9ea6a3
+      internalID: -2017927499
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TestWall_5
+      name: DiamondTest_5
       rect:
         serializedVersion: 2
         x: 43
@@ -229,18 +229,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7e7333445cb6e684d84fcd644ce6e225
-      internalID: -1212897749
+      spriteID: f2b64e5ad7f9e7e42a0a8a3b6913677f
+      internalID: 302155458
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TestWall_6
+      name: DiamondTest_6
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 1
         width: 21
         height: 21
       alignment: 0
@@ -250,18 +250,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: abf14436d6f4c6b4c887282a0791cac9
-      internalID: 213791715
+      spriteID: af4e9cfac0967044fa922100f6d82d2b
+      internalID: -2007866470
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TestWall_7
+      name: DiamondTest_7
       rect:
         serializedVersion: 2
         x: 21
-        y: 0
+        y: 1
         width: 21
         height: 21
       alignment: 0
@@ -271,18 +271,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1235c99036122a3458145311242d7a46
-      internalID: 1763299861
+      spriteID: b22fa138f8eae08469a01961a8999776
+      internalID: -1571104460
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TestWall_8
+      name: DiamondTest_8
       rect:
         serializedVersion: 2
         x: 43
-        y: 0
+        y: 1
         width: 21
         height: 21
       alignment: 0
@@ -292,8 +292,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 423457b9f7e1786449ac38e95f710dfa
-      internalID: 1685298954
+      spriteID: 4b751ed29be4cc742aaad116bd4bb1b9
+      internalID: 1831878724
       vertices: []
       indices: 
       edges: []
@@ -309,15 +309,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      TestWall_0: 2021890683
-      TestWall_1: -777720693
-      TestWall_2: -1545822007
-      TestWall_3: -414043446
-      TestWall_4: -1306173334
-      TestWall_5: -1212897749
-      TestWall_6: 213791715
-      TestWall_7: 1763299861
-      TestWall_8: 1685298954
+      DiamondTest_0: 2121854568
+      DiamondTest_1: -422809997
+      DiamondTest_2: 769750954
+      DiamondTest_3: -593155205
+      DiamondTest_4: -2017927499
+      DiamondTest_5: 302155458
+      DiamondTest_6: -2007866470
+      DiamondTest_7: -1571104460
+      DiamondTest_8: 1831878724
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
