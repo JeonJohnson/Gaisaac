@@ -14,7 +14,7 @@ public class Bullet_Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("ÃÑ¾Ë Ãæµ¹µÊ");
+        //Debug.Log("ÃÑ¾Ë Ãæµ¹µÊ");
          Player player = other.transform.root.GetComponent<Player>();
         if(player != null ) { player.Hit(dmg); Destroy(this.gameObject); }
     }
