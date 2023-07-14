@@ -48,6 +48,7 @@ public class Player : MonoBehaviour
     [Header("FOV")]
     public Material fovMat;
     public Transform fovSpriteTr;
+    public SpriteRenderer fovRdr;
 
     public Vector2 leftDir;
     public Vector2 lookDir;
@@ -167,6 +168,10 @@ public class Player : MonoBehaviour
             if (!Input.GetMouseButton(1))
             {
                 Charging();
+
+                //Color temp = fovRdr.color;
+                //temp.a = 0;
+                //fovRdr.color = temp;
             }
         }
         else
@@ -179,6 +184,9 @@ public class Player : MonoBehaviour
                 {
                     return;
                 }
+                //Color temp = fovRdr.color;
+                //temp.a = 0.5f;
+                //fovRdr.color = temp;
 
                 stat.curConsumeRatio -= amount;
                 stat.curConsumeRatio  = Mathf.Clamp(stat.curConsumeRatio, 0f, 1f);
@@ -212,6 +220,9 @@ public class Player : MonoBehaviour
             else
             {
                 Charging();
+                //Color temp = fovRdr.color;
+                //temp.a = 0;
+                //fovRdr.color = temp;
             }
         }
         
