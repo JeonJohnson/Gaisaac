@@ -1067,8 +1067,22 @@ namespace Enums
 		End
 	}
 
+	public enum eShooter0Status
+	{
+		Idle,
+		Attack,
+		Death,
+		End
+	}
 
-
+    public enum eShooter1Status
+    {
+        Idle,
+        Trace,
+        Attack,
+        Death,
+		End
+    }
 }
 
 namespace Structs
