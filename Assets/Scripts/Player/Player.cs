@@ -51,7 +51,6 @@ public class Player : MonoBehaviour
     public Coroutine fallCor = null;
     public Transform fallCol;
 
-
     public PlayerItem itemSystem;
 
     public Rigidbody2D rd;
@@ -59,6 +58,47 @@ public class Player : MonoBehaviour
     public float curAtkTime = 0f;
 
     public Transform spriteTr;
+
+    public bool GodMode = false;
+    public Coroutine godCor;
+    public BlinkEffector bilnker;
+
+    public void GodModeOn(float time)
+    {
+        if (godCor != null)
+        {
+            StopCoroutine(godCor);
+            bilnker.StartBlink();
+        }
+
+        godCor = StartCoroutine(GodCoroutine(time));
+    }
+
+    public void GodModeOff()
+    {
+        if (godCor != null)
+        {
+            StopCoroutine(godCor);
+            bilnker.StopBlink();
+        }
+
+        GodMode = false;
+        godCor = null;
+    }
+
+    private IEnumerator GodCoroutine(float time)
+    {
+        GodMode = true;
+        bilnker.SetDuringTime(time);
+        bilnker.StartBlink();
+
+        yield return new WaitForSeconds(time);
+
+        GodMode = false;
+
+        godCor = null;
+    }
+
 
     
     [Header("FOV")]
@@ -116,11 +156,18 @@ public class Player : MonoBehaviour
 
     public void Hit(int dmg)
 	{
-        if (itemSystem.curState == PlayerItemState.God)
+        //if (itemSystem.curState == PlayerItemState.God)
+        //{
+        //    return;
+        //}
+
+        if (GodMode || isDead)
         {
             return;
         }
 
+
+        GodModeOn(0.25f);
         //stat.curHp -= dmg;
         Debug.Log($"{dmg}만큼 딜 받음");
 
@@ -130,7 +177,6 @@ public class Player : MonoBehaviour
         }
         else
         {
-
             stat.curHp = Math.Clamp(stat.curHp - dmg, 0, stat.maxHp);
 
             if (stat.curHp <= 0)
@@ -460,6 +506,17 @@ public class Player : MonoBehaviour
         UpdateHpUI();
 
 
+#if UNITY_EDITOR
+        if (Input.GetKey(KeyCode.LeftShift) )
+        {
+            GodMode = true;
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            GodMode = false;
+        }
+#endif
     }
 
 	private void LateUpdate()

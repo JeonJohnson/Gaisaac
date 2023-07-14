@@ -12,7 +12,7 @@ public class Item : MonoBehaviour
 	{
 		if (other.CompareTag("Player"))
 		{
-            SoundManager.Instance.PlayTempSound("pickup", this.transform.position, 1f);
+            //SoundManager.Instance.PlayTempSound("pickup", this.transform.position, 1f);
 
             PlayerItem script = other.GetComponent<PlayerItem>();
 
