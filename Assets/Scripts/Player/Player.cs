@@ -1,0 +1,107 @@
+﻿
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+
+[Serializable]
+public struct PlayerStat
+{
+    public int maxHp;
+    public int curHp;
+
+    public float moveSpd;
+
+    public float consumeTime;
+    //흡수 게이지는 normalize 된 0 ~ 1 사이이고
+    //관리하는건 쭉 눌렀을 때 다 소모되는 시간
+    //한번 눌르면 1/consumeTime 만큼 없애주면됨
+
+    public int bulletCnt;
+
+}
+
+
+
+public class Player : MonoBehaviour
+{
+    public PlayerStat stat;
+
+	public void Hit(int dmg)
+	{
+        stat.curHp -= dmg;
+	}
+
+
+	public void PlayerMove()
+    {
+
+        Vector2 moveDir = Vector2.zero;
+
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            moveDir += Vector2.up ;
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            moveDir += Vector2.left ;
+        }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            moveDir += Vector2.down ;
+        }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            moveDir += Vector2.right ;
+        }
+
+        moveDir = moveDir.normalized * Time.deltaTime * stat.moveSpd;
+
+        transform.position += new Vector3(moveDir.x, moveDir.y, 0f) ;
+    }
+
+
+    public void Fire()
+    { 
+        
+    }
+
+
+    public void Consume()
+    { 
+    
+    }
+
+
+	private void Awake()
+	{
+		
+	}
+
+	// Start is called before the first frame update
+	void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+	private void LateUpdate()
+	{
+        PlayerMove();
+    }
+
+	private void FixedUpdate()
+	{
+        
+    }
+}

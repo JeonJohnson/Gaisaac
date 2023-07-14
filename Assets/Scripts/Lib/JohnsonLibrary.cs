@@ -897,57 +897,6 @@ public static class Funcs
 		//}
 	}
 
-	//public static string ShowSaveFileDialog()
-	//{
-	//	//여기서는 그냥 폴더 주소만 찾아주는 역할.
-	//	//실제 세이브/로드는 다른 함수에서!
-
-	//	System.Windows.Forms.SaveFileDialog dia = new System.Windows.Forms.SaveFileDialog();
-
-	//	string path = UnityEngine.Application.dataPath;//프로젝트 폴더내의 Asset폴더
-	//												   //Debug.Log(path); 
-	//	dia.InitialDirectory = path + "../"; //Dialog창 띄울때 열릴 폴더 위치
-	//	dia.Title = "Open Map Data File"; //
-	//	dia.DefaultExt = "bin";
-	//	dia.Filter = "모든 파일 (*.*) | *.*";
-
-	//	var diaResult = dia.ShowDialog();
-
-	//	if (diaResult == System.Windows.Forms.DialogResult.OK)
-	//	{//okay 버튼 눌렀을때
-
-	//		//File경로와 File명을 모두 가지고 온다.
-	//		string temp = dia.FileName;
-
-	//		return dia.FileName;
-	//	}
-
-	//	return string.Empty;
-	//}
-
-	//public static string ShowOpenFileDialog()
-	//{
-	//	System.Windows.Forms.OpenFileDialog dia = new System.Windows.Forms.OpenFileDialog();
-
-	//	string path = UnityEngine.Application.dataPath;//프로젝트 폴더내의 Asset폴더
-	//												   //Debug.Log(path); 
-	//	dia.InitialDirectory = path + "../"; //Dialog창 띄울때 열릴 폴더 위치
-	//	dia.Title = "Test Dialog Window"; //
-	//									  //dia.DefaultExt = "bin";
-	//	dia.Filter = "binaryFile (*.bin)|*.bin";
-
-	//	var diaResult = dia.ShowDialog();
-
-	//	if (diaResult == System.Windows.Forms.DialogResult.OK)
-	//	{//okay 버튼 눌렀을때
-
-	//		//File경로와 File명을 모두 가지고 온다.
-	//		string temp = dia.FileName;
-	//		return temp;
-	//	}
-
-	//	return string.Empty;
-	//}
 
 	public static T LoadBinary<T>(string path)
 	{
@@ -1004,21 +953,6 @@ public static class Defines
 	public const float PI = 3.14159265f;
 
 
-	//D_Days[Difficulty, raidCount]
-	public static int[,] D_Days =	{
-										{ 15, 25, 30, 35, 40},
-										{ 15, 30, 40, 50, 65},
-										{ 1, 35, 55, 75, 90}
-									};
-	//top, right, bottom, left
-	public static Vector2Int[] RaidSpawnIndex = {
-													new Vector2Int(0,0),
-													new Vector2Int(tileCount,0),
-													new Vector2Int(tileCount,tileCount),
-													new Vector2Int(0,tileCount),
-												};
-
-
 	public static string managerPrfabFolderPath = "Prefabs/Managers/";
 	public static bool DESTROY = false;
 	public static bool DONT_DESTROY = true;
@@ -1045,27 +979,7 @@ public static class Defines
 
 namespace Enums
 {
-	public enum eScenes
-	{ 
-		Intro,
-		Title,
-		Game,
-		End
-	}
-
-
 	
-	public enum eTargetPriority
-	{ 
-		Front,
-		Rear,
-		Close,
-		Random,
-		MaxHpAmount,
-		MinHpAmount,
-		CurHp,
-		End
-	}
 
 
 
@@ -1166,51 +1080,7 @@ namespace Structs
 		public float yMax;
 	}
 
-	//[System.Serializable]
-	//public struct RayResult
-	//{
-	//	//public RayResult()
-	//	//{
-	//	//	isHit = false;
-	//	//	hitPosition = Vector3.negativeInfinity;
-	//	//	objectScript = null;
-	//	//}
-
-	//	public bool isHit;
-	//	public Vector3 hitPosition;
-	//	public CObj objectScript;
-		
-	//	public RaycastHit rayHit;
-	//}
 	
-	//[System.Serializable]
-	//public struct DmgStruct
-	//{
-	//	public DmgStruct(CObj _body, int _dmg, bool _isCrit)
-	//	{
-	//		atkObj = _body;
-	//		dmg = _dmg;
-	//		isCrit = _isCrit;
-	//	}
-
-	//	public DmgStruct(CObj _body, int _dmg)
-	//	{
-	//		atkObj = _body;
-	//		dmg = _dmg;
-	//		isCrit = false;
-	//	}
-
-	//	public DmgStruct(CObj _body, float _dmg)
-	//	{
-	//		atkObj = _body;
-	//		dmg = (int)_dmg;
-	//		isCrit = false;
-	//	}
-
-	//	public CObj atkObj;
-	//	public int dmg;
-	//	public bool isCrit;
-	//}
 }
 
 namespace UI
@@ -1225,14 +1095,7 @@ namespace UI
 
 namespace Johnson
 {
-	public enum TIME_SCALE
-	{ 
-		PAUSE = 0,
-		X1 = 1,
-		X2 = 2,
-		X4 = 4,
-		X10 = 10
-	}
+
 
 	
 
