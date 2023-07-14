@@ -46,8 +46,6 @@ public class PlayerItem : MonoBehaviour
 					player.itemIconSprite.sprite = iconList[(int)itemState - 1];
 					player.itemName.text = itemName[(int)itemState - 1];
 					player.itemExplain.text = explain[(int)itemState - 1];
-
-					count = 3;
 				}
 				break;
 
@@ -96,19 +94,15 @@ public class PlayerItem : MonoBehaviour
 				break;
 
 			case PlayerItemState.God:
-				{ 
-				
+				{
+					count = 10;
+					player.GodModeOn(count);
 				}
 				break;
 
 			case PlayerItemState.Dash:
-				{ 
-				
-				}
-				break;
-			case PlayerItemState.end:
-				{ 
-				
+				{
+					count = 3;
 				}
 				break;
 			default:
@@ -141,17 +135,12 @@ public class PlayerItem : MonoBehaviour
 				break;
 			case PlayerItemState.God:
 				{
-					
+					player.GodModeOff();
 				}
 				break;
 			case PlayerItemState.Dash:
 				{
-
-				}
-				break;
-			case PlayerItemState.end:
-				{
-
+							
 				}
 				break;
 			default:

@@ -1929,6 +1929,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7999888058861234172}
   - component: {fileID: 1303449141680202273}
+  - component: {fileID: 5801389927600296508}
   m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
@@ -2003,6 +2004,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5801389927600296508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6615084304804449246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62f9c7d356b4a6046b05f3ddb19fc932, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sRenderer: {fileID: 1303449141680202273}
+  blinkPower: 1.25
+  blinkCount: 5
+  blinkCycle: 0.25
 --- !u!1 &6694291701332606511
 GameObject:
   m_ObjectHideFlags: 0
@@ -2046,7 +2063,7 @@ Transform:
   - {fileID: 2476688022934214795}
   - {fileID: 1585255737613403861}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1153553536326016743
 MonoBehaviour:
@@ -2080,6 +2097,8 @@ MonoBehaviour:
   rd: {fileID: 2934485938537797540}
   curAtkTime: 0
   spriteTr: {fileID: 7999888058861234172}
+  GodMode: 0
+  bilnker: {fileID: 5801389927600296508}
   fovMat: {fileID: 2100000, guid: 9c3bfa4de4bea3b4182c49617457e636, type: 2}
   fovSpriteTr: {fileID: 2135782684704119016}
   fovRdr: {fileID: 0}

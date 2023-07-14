@@ -18,6 +18,16 @@ public class BlinkEffector : MonoBehaviour
         defColor = sRenderer.material.color;
     }
 
+    public void SetDuringTime(float time)
+    {
+        blinkCount = (int)(time / blinkCycle);
+    }
+
+    public void StopBlink()
+    {
+        StopAllCoroutines();
+    }
+
     public void StartBlink()
     {
         StopAllCoroutines();
@@ -30,10 +40,13 @@ public class BlinkEffector : MonoBehaviour
         while (true)
         {
             count--;
+            
             yield return new WaitForSeconds(blinkCycle / 2f);
             sRenderer.material.color = defColor * blinkPower;
+            
             yield return new WaitForSeconds(blinkCycle / 2f);
             sRenderer.material.color = defColor;
+
             if (count <= 0)
             {
                 yield break;
