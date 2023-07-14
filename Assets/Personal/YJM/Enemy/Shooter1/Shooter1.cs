@@ -72,11 +72,16 @@ public class Shooter1 : Enemy
 
     private void Trace()
     {
+        Vector3 dir = target.transform.position - transform.position;
+        dir.Normalize();
+        Vector3 destinationPos = (target.transform.position + dir * 5f);
+        //agent.SetDestination(destinationPos);
+
         // 추적
         if (Vector3.Distance(this.transform.position, target.transform.position) < traceDistance)
         {
             status = eShooter1Status.Idle;
-           // agent.SetDestination()
+            agent.isStopped = true;
         }
     }
 
