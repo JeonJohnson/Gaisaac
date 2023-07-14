@@ -1,19 +1,15 @@
-﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
-Shader "Custom/RadialFill"
+﻿Shader "Custom/FOV_Consume"
 {
 	Properties
 	{
 		//기본적으로 값이 추가되면 그만큼 비어지는거
+
 		[PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
 		
 		_Color ("Tint", Color) = (1,1,1,1)
         _PivotAngle("PivotAngle", Range(0, 360)) = 0 //시작 각도? 0 기준 right, 반시계방향
 
 		_FovAngle("FovAngle", Range(0,360)) = 90
-
-
-		//[MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
 	}
 
 	SubShader
@@ -37,7 +33,6 @@ Shader "Custom/RadialFill"
 		CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
-			//#pragma multi_compile _ PIXELSNAP_ON
 			#include "UnityCG.cginc"
 			
 			struct appdata_t
@@ -62,10 +57,6 @@ Shader "Custom/RadialFill"
 				OUT.vertex = UnityObjectToClipPos(IN.vertex);
 				OUT.texcoord = IN.texcoord;
 				OUT.color = IN.color * _Color;
-				//#ifdef PIXELSNAP_ON
-				//OUT.vertex = UnityPixelSnap (OUT.vertex);
-				//#endif
-
 				return OUT;
 			}
 
@@ -98,8 +89,6 @@ Shader "Custom/RadialFill"
 
 				float _Angle = 270 - _PivotAngle;
 
-                //-------- Creating arc --------//
-                // sector start/end angles
 				//draw start, draw end 
 				_Arc = (360  - (_FovAngle) )/2;
                 float startAngle = _Angle - _Arc;
@@ -119,7 +108,7 @@ Shader "Custom/RadialFill"
 				}
                 
 
-                if(atanAngle >= startAngle && atanAngle <= endAngle) discard;//시작 각도 관련
+                if(atanAngle >= startAngle && atanAngle <= endAngle) discard;
                 if(atanAngle <= offset360) discard;
                 if(atanAngle >= offset0) discard;
 
