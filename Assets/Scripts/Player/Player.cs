@@ -2,8 +2,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 [Serializable]
 public struct PlayerStat
@@ -33,16 +35,33 @@ public class Player : MonoBehaviour
 {
     public PlayerStat stat;
 
+    public float curAtkTime = 0f;
+
     public Transform spriteTr;
 
+    
+    [Header("FOV")]
     public Material fovMat;
     public Transform fovSpriteTr;
-
-    public GameObject bulletPrefab;
 
     public Vector2 leftDir;
     public Vector2 lookDir;
     public Vector2 rightDir;
+
+    public List<GameObject> consumeList = new List<GameObject>();
+
+
+    [Header("Bullet")]
+    public GameObject bulletPrefab;
+
+    
+    [Header("UI")]
+    public TextMeshProUGUI bulletCnt;
+    public List<Image> hpList;
+    public RectTransform crossHairHolder;
+
+    public Image consumeGauge;
+
 
     public void Hit(int dmg)
 	{
@@ -87,67 +106,90 @@ public class Player : MonoBehaviour
 	public void Aim()
 	{
 		//FOV 스프라이트 회전 하고 하믄 댐
-		//UIManager.Instance.crossHair.rectTransform
 
-		//Vector2 pos = Input.mousePosition;
-
-		UIManager.Instance.crossHairHolder.anchoredPosition = Input.mousePosition;
-
+		crossHairHolder.anchoredPosition = Input.mousePosition;
 
 		Vector3 cursorWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        //fovSprite.LookAt(cursorWorldPos);
-
         lookDir = (cursorWorldPos - transform.position).normalized;
-
 
         fovSpriteTr.up = lookDir;
 	}
 
 	public void Fire()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            GameObject bulletObj = Instantiate(bulletPrefab);
-            bulletObj.transform.position = transform.position;
-            Bullet_Player script = bulletObj.GetComponent<Bullet_Player>();
+		if (Input.GetMouseButton(0))
+		{
+			if (stat.bulletCnt > 0 && curAtkTime >= stat.atkSpd)
+			{
+				GameObject bulletObj = Instantiate(bulletPrefab);
+				bulletObj.transform.position = transform.position;
+				Bullet_Player script = bulletObj.GetComponent<Bullet_Player>();
 
-            script.Fire(transform.position, lookDir);
-        }
-    }
+				script.Fire(transform.position, lookDir);
+
+				--stat.bulletCnt;
+
+				curAtkTime = 0f;
+			}
+		}
+	}
 
     
 
 
     public void Consume()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (stat.curConsumeRatio <= 0f)
         {
-            //stat.curConsumeRatio = stat.curConsumeRatio - (1f / stat.consumeTime);
-            
-            //float halfFovAngle = stat.consumeAngle * 0.5f;
-            //leftDir = DegreeAngle2Dir(fovSpriteTr.eulerAngles.z - halfFovAngle);
-            //rightDir = DegreeAngle2Dir(fovSpriteTr.eulerAngles.z + halfFovAngle);
-
-            var cols = Physics2D.OverlapCircleAll(transform.position, stat.consumeRange/2f,LayerMask.GetMask("Bullet_Enemy"));
-
-            foreach (var col in cols)
+            Charging();
+        }
+        else
+        {
+            if (Input.GetMouseButton(1))
             {
-                Vector3 targetPos = col.transform.position;
-                Vector2 targetDir = (targetPos - transform.position).normalized;
+                stat.curConsumeRatio -= (1f / stat.consumeTime) * Time.deltaTime;
+                stat.curConsumeRatio  = Mathf.Clamp(stat.curConsumeRatio, 0f, 1f);
 
-                var tempLookDir = DegreeAngle2Dir(-fovSpriteTr.eulerAngles.z);
-                //lookDir랑 값다른데 이거로 적용됨 일단 나중에 ㄱ
-                float angleToTarget = Mathf.Acos(Vector2.Dot(targetDir, tempLookDir)) * Mathf.Rad2Deg;
+                var cols = Physics2D.OverlapCircleAll(transform.position, stat.consumeRange / 2f, LayerMask.GetMask("Bullet_Enemy"));
 
-                //내적해주고 나온 라디안 각도를 역코사인걸어주고 오일러각도로 변환.
-                if (angleToTarget <= (stat.consumeAngle * 0.5f))
+                foreach (var col in cols)
                 {
-                    ++stat.bulletCnt;
+                    Vector3 targetPos = col.transform.position;
+                    Vector2 targetDir = (targetPos - transform.position).normalized;
+
+                    var tempLookDir = DegreeAngle2Dir(-fovSpriteTr.eulerAngles.z);
+                    //lookDir랑 값다른데 이거로 적용됨 일단 나중에 ㄱ
+                    float angleToTarget = Mathf.Acos(Vector2.Dot(targetDir, tempLookDir)) * Mathf.Rad2Deg;
+
+                    //내적해주고 나온 라디안 각도를 역코사인걸어주고 오일러각도로 변환.
+                    if (angleToTarget <= (stat.consumeAngle * 0.5f))
+                    {
+                        var bullet = col.gameObject.GetComponent<Bullet_Enemy>();
+
+                        if (bullet != null && /*!bullet.isConsumed*/ bullet.gameObject.activeSelf)
+                        {
+                            //bullet.isConsumed = true;
+                            bullet.gameObject.SetActive(false);
+                            GameObject.Destroy(bullet.gameObject);
+                            ++stat.bulletCnt;
+                        }
+                    }
                 }
             }
+            else
+            {
+                Charging();
+            }
         }
+        
 
+
+    }
+
+    public void Charging()
+    {
+        stat.curConsumeRatio = Mathf.Clamp(stat.curConsumeRatio + Time.deltaTime, 0f, 1f);
     }
 
 
@@ -168,7 +210,10 @@ public class Player : MonoBehaviour
     private void Awake()
 	{
         fovMat = fovSpriteTr.GetComponent<SpriteRenderer>().material;
-	}
+
+        stat.curConsumeRatio = 1f;
+
+    }
 
 	// Start is called before the first frame update
 	void Start()
@@ -179,16 +224,24 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         fovSpriteTr.localScale = new Vector2(stat.consumeRange, stat.consumeRange);
         fovMat.SetFloat("_FovAngle", stat.consumeAngle);
 
 
         Aim();
 
+
+        if (curAtkTime < stat.atkSpd)
+        {
+            curAtkTime += Time.deltaTime;
+        }
+
         Fire();
 
         Consume();
+
+        consumeGauge.fillAmount = stat.curConsumeRatio;
+        bulletCnt.text = $"총알 : {stat.bulletCnt}";
     }
 
 	private void LateUpdate()
