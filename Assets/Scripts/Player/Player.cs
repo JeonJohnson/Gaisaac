@@ -46,6 +46,12 @@ public class Player : MonoBehaviour
     public PlayerStat stat;
     public bool isDead = false;
 
+    public bool onHole = false;
+    
+    public Coroutine fallCor = null;
+    public Transform fallCol;
+
+
     public PlayerItem itemSystem;
 
     public Rigidbody2D rd;
@@ -114,7 +120,6 @@ public class Player : MonoBehaviour
         {
             return;
         }
-        
 
         //stat.curHp -= dmg;
         Debug.Log($"{dmg}만큼 딜 받음");
@@ -142,12 +147,44 @@ public class Player : MonoBehaviour
         }
 	}
 
+    public void FallingDeath()
+    {
+        fallCor = StartCoroutine(FallAnim());
+    }
+
+
+    public IEnumerator FallAnim()
+    {
+        rd.velocity = Vector3.zero;
+
+        yield return new WaitForSeconds(0.5f);
+
+        
+
+        while (true)
+        {
+            Vector2 scale = spriteTr.localScale;
+
+            if (scale.x <= 0f)
+            {
+                break;
+            }
+
+            scale -= Time.deltaTime * Vector2.one;
+            spriteTr.localScale = scale;
+
+            yield return null;
+        }
+
+        isDead = true;
+    }
+    
+
 
 	public void PlayerMove()
     {
         Vector2 moveDir = Vector2.zero;
-
-
+        
         if (Input.GetKey(KeyCode.W))
         {
             moveDir += Vector2.up ;
@@ -171,14 +208,21 @@ public class Player : MonoBehaviour
             spriteTr.localScale = new Vector3(1f, 1f, 1f);
         }
 
+        if (onHole && moveDir != Vector2.zero)
+        {
+            FallingDeath();
+            return;
+        }
 
 
         moveDir = moveDir.normalized * Time.deltaTime * stat.moveSpd * Dash();
-
-        //transform.position += new Vector3(moveDir.x, moveDir.y, 0f);
-        rd.velocity = moveDir;
         
+
+        rd.velocity = moveDir;
 	}
+
+
+
 
 	public void Aim()
 	{
@@ -384,15 +428,15 @@ public class Player : MonoBehaviour
         lifeCnt.text = "";
     }
 
-	// Start is called before the first frame update
-	void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
     void Update()
     {
+
+        if (isDead || fallCor != null)
+        {
+            return;
+        }
+
         fovSpriteTr.localScale = new Vector2(stat.consumeRange, stat.consumeRange);
         fovMat.SetFloat("_FovAngle", stat.consumeAngle);
 
@@ -424,11 +468,18 @@ public class Player : MonoBehaviour
 
 	private void FixedUpdate()
 	{
+
+        if (isDead || fallCor != null)
+        {
+            return;
+        }
         PlayerMove();
         
     }
 
-    public void OnDrawGizmos()
+
+
+	public void OnDrawGizmos()
     {
 
 		float halfFovAngle = stat.consumeAngle * 0.5f;
@@ -443,5 +494,7 @@ public class Player : MonoBehaviour
 		Debug.DrawRay(transform.position, rightDir.normalized * halfFovAngle, Color.cyan);
 
 	}
+
+
 
 }
