@@ -43,7 +43,15 @@ public class Bullet_Boss : MonoBehaviour
         StartCoroutine(DestoryCor());
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+
+	private void Update()
+	{
+        Vector3 pos = transform.position;
+        pos.z = 0;
+        transform.position = pos;
+	}
+
+	private void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log("트리거 충돌");
         Enemy enemy = collision.gameObject.GetComponent<Enemy>();

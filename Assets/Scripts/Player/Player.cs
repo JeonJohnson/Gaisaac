@@ -246,7 +246,7 @@ public class Player : MonoBehaviour
                 stat.curConsumeRatio -= amount;
                 stat.curConsumeRatio  = Mathf.Clamp(stat.curConsumeRatio, 0f, 1f);
 
-                var cols = Physics2D.OverlapCircleAll(transform.position, stat.consumeRange / 2f, LayerMask.GetMask("Bullet_Enemy"));
+                var cols = Physics2D.OverlapCircleAll(transform.position, stat.consumeRange / 2f, LayerMask.GetMask("Bullet_Enemy", "Bullet_Boss"));
 
                 foreach (var col in cols)
                 {
@@ -257,20 +257,18 @@ public class Player : MonoBehaviour
                     //lookDir랑 값다른데 이거로 적용됨 일단 나중에 ㄱ
                     float angleToTarget = Mathf.Acos(Vector2.Dot(targetDir, tempLookDir)) * Mathf.Rad2Deg;
 
-                    //내적해주고 나온 라디안 각도를 역코사인걸어주고 오일러각도로 변환.
-                    if (angleToTarget <= (stat.consumeAngle * 0.5f))
-                    {
-                        var bullet = col.gameObject.GetComponent<Bullet_Enemy>();
+					//내적해주고 나온 라디안 각도를 역코사인걸어주고 오일러각도로 변환.
+					if (angleToTarget <= (stat.consumeAngle * 0.5f))
+					{
+						if (col.gameObject.activeSelf)
+						{
+							col.gameObject.SetActive(false);
+							GameObject.Destroy(col.gameObject);
+							++stat.bulletCnt;
+						}
 
-                        if (bullet != null && /*!bullet.isConsumed*/ bullet.gameObject.activeSelf)
-                        {
-                            //bullet.isConsumed = true;
-                            bullet.gameObject.SetActive(false);
-                            GameObject.Destroy(bullet.gameObject);
-                            ++stat.bulletCnt;
-                        }
-                    }
-                }
+					}
+				}
             }
             else
             {
