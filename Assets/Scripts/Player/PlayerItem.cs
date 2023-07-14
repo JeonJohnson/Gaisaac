@@ -18,8 +18,43 @@ public class PlayerItem : MonoBehaviour
 	public Player player;
 	public PlayerItemState curState;
 
+	
 	public List<Sprite> iconList;
 
+	public List<string> itemName;
+	public List<string> explain;
+
+	public int count;
+
+
+	public void SetItemIcon(PlayerItemState itemState)
+	{
+		switch (itemState)
+		{
+			case PlayerItemState.None:
+				{
+					player.itemIconHolder.SetActive(false);
+
+				}
+				break;
+			case PlayerItemState.ConsumeRangeUp:
+			case PlayerItemState.OneMoreChance:
+			case PlayerItemState.EquipArmor:
+			case PlayerItemState.God:
+			case PlayerItemState.Dash:
+				{
+					player.itemIconHolder.SetActive(true);
+					player.itemIconSprite.sprite = iconList[(int)itemState - 1];
+					player.itemName.text = itemName[(int)itemState - 1];
+					player.itemExplain.text = explain[(int)itemState - 1];
+
+					count = 3;
+				}
+				break;
+
+
+		}
+	}
 
 	public void RootItem(PlayerItemState effect)
 	{
@@ -29,7 +64,9 @@ public class PlayerItem : MonoBehaviour
 
 			curState = effect;
 		}
-		
+
+
+		SetItemIcon(effect);
 
 		switch (effect)
 		{
@@ -43,8 +80,6 @@ public class PlayerItem : MonoBehaviour
 				{
 					player.stat.consumeAngle = 90f;
 					player.stat.consumeRange = 6f;
-
-
 				}
 				break;
 
