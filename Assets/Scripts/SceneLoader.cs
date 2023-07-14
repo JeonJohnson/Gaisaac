@@ -48,15 +48,15 @@ public class SceneLoader : MonoBehaviour
 
         if(loadingTextTimer < 0.3f)
         {
-            loadingText.text = "L   ading.";
+            loadingText.text = "Loading.";
         }
         else if(loadingTextTimer < 0.6f)
         {
-            loadingText.text = "L   ading..";
+            loadingText.text = "Loading..";
         }
         else if(loadingTextTimer < 0.9f)
         {
-            loadingText.text = "L   ading...";
+            loadingText.text = "Loading...";
         }
         else
         {

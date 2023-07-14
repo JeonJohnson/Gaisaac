@@ -1006,6 +1006,16 @@ namespace Enums
         Death,
         End
     }
+
+    public enum eBossStatus
+    {
+        Idle,
+        Trace,
+        Attack,
+		Teleport,
+        Death,
+        End
+    }
 }
 
 namespace Structs

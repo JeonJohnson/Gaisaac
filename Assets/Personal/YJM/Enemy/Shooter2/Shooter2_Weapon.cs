@@ -24,7 +24,6 @@ public class Shooter2_Weapon : MonoBehaviour
         float rnd = Random.Range(-owner.spreadValue * 0.5f, owner.spreadValue * 0.5f);
         Quaternion rndRot = Quaternion.Euler(0f, 0f, rnd);
 
-        Debug.Log(Quaternion.LookRotation(Vector3.forward, dir));
         GameObject go = Instantiate(bulletPrefab, firePos.transform.position, Quaternion.LookRotation(Vector3.forward, dir) * rndRot);
         go.GetComponent<Bullet_Enemy>().dmg = owner.dmg;
     }

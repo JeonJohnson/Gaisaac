@@ -72,15 +72,10 @@ public class Shooter2 : Enemy
     private void Idle()
     {
         timer -= Time.deltaTime;
-        if (timer < 0f)
+        if (timer < 0f && Vector3.Distance(this.transform.position, target.transform.position) > shootingDistance)
         {
             status = eShooter2Status.Attack;
             timer = dps;
-        }
-
-        if (Vector3.Distance(this.transform.position, target.transform.position) > shootingDistance)
-        {
-            status = eShooter2Status.Patrol;
         }
     }
 
