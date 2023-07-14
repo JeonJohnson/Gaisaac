@@ -118,7 +118,7 @@ Transform:
   m_GameObject: {fileID: 6312862456168009504}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 0}
+  m_LocalScale: {x: 4, y: 4, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6436187243710555255}
@@ -347,14 +347,16 @@ MonoBehaviour:
     maxHp: 0
     curHp: 0
     moveSpd: 4
-    curConsumeRatio: 0
-    consumeTime: 0
+    curConsumeRatio: 1
+    consumeTime: 5
     consumeAngle: 90
     consumeRange: 4
     bulletCnt: 0
     atkSpd: 0.2
   spriteTr: {fileID: 7999888058861234172}
   fovMat: {fileID: 2100000, guid: 9c3bfa4de4bea3b4182c49617457e636, type: 2}
-  fovSprite: {fileID: 2135782684704119016}
+  fovSpriteTr: {fileID: 2135782684704119016}
   bulletPrefab: {fileID: 656147100588692258, guid: 20c156f89aeca0e40acc069d0e6a28fb, type: 3}
+  leftDir: {x: 0, y: 0}
   lookDir: {x: 0, y: 0}
+  rightDir: {x: 0, y: 0}
