@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
-public class Shooter1_Weapon : MonoBehaviour
+public class Shooter2_Weapon : MonoBehaviour
 {
     [SerializeField] GameObject bulletPrefab;
-    [SerializeField] Shooter1 owner;
+    [SerializeField] Shooter2 owner;
     [SerializeField] Transform firePos;
 
     private void Update()

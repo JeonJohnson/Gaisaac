@@ -1,10 +1,10 @@
-ï»¿using Enums;
+using Enums;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Shooter1 : Enemy
+public class Shooter2 : Enemy
 {
     [Header("Stat")]
     public float idleTime = 2f;
@@ -16,28 +16,33 @@ public class Shooter1 : Enemy
     public float spreadValue = 75f;
 
     [Header("RangeSetting")]
-    [SerializeField] float traceDistance = 12f; // ì–´ëŠ ê±°ë¦¬ê¹Œì§€ ì¶”ì í• ê²ƒì¸ê°€
-    [SerializeField] float shootingDistance = 15f; // ì–´ëŠë²”ìœ„ê¹Œì§€ ë©€ì–´ì§€ë©´ ì¶”ì  ì‹œì‘í• ê²ƒì¸ê°€
+    [SerializeField] float traceDistance = 12f; // ¾î´À °Å¸®±îÁö ÃßÀûÇÒ°ÍÀÎ°¡
+    [SerializeField] float shootingDistance = 15f; // ¾î´À¹üÀ§±îÁö ¸Ö¾îÁö¸é ÃßÀû ½ÃÀÛÇÒ°ÍÀÎ°¡
 
     [SerializeField] float timer = 0f;
 
-    [SerializeField] Shooter1_Weapon weapon;
+    [SerializeField] Shooter2_Weapon weapon;
 
     public Player target;
 
     [Header("NavAI")]
     [SerializeField] NavMeshAgent agent;
+    [SerializeField] Transform[] posList;
+    private int i_curPos = 0;
+    private bool isArrived = true;
+    private enum PatrolType { Loop, YoYo}
+    private PatrolType patrolType = PatrolType.Loop;
 
-    public eShooter1Status status;
+    public eShooter2Status status;
 
     private void Start()
     {
         if (target == null)
             target = ObjectManager.Instance.player;
 
-        status = eShooter1Status.Idle;
-        timer = idleTime;
+        status = eShooter2Status.Idle;
         curBulletCount = bulletCount;
+        timer = idleTime;
         if (agent == null) agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
     }
@@ -47,19 +52,18 @@ public class Shooter1 : Enemy
         Vector3 dir = new Vector3(0f, 0f, 0f);
         transform.eulerAngles = new Vector3(0f, 0f, 0f);
 
+        Patrol();
+
         base.Update();
         switch (status)
         {
-            case eShooter1Status.Idle:
+            case eShooter2Status.Idle:
                 Idle();
                 break;
-            case eShooter1Status.Trace:
-                Trace();
-                break;
-            case eShooter1Status.Attack:
+            case eShooter2Status.Attack:
                 Attack();
                 break;
-            case eShooter1Status.Death:
+            case eShooter2Status.Death:
                 Death();
                 break;
         }
@@ -70,29 +74,45 @@ public class Shooter1 : Enemy
         timer -= Time.deltaTime;
         if (timer < 0f)
         {
-            status = eShooter1Status.Attack;
+            status = eShooter2Status.Attack;
             timer = dps;
         }
 
         if (Vector3.Distance(this.transform.position, target.transform.position) > shootingDistance)
         {
-            status = eShooter1Status.Trace;
+            status = eShooter2Status.Patrol;
         }
     }
 
-    private void Trace()
+    private void Patrol()
     {
-        Vector3 dir = target.transform.position - transform.position;
-        dir.Normalize();
-        Vector3 destinationPos = (target.transform.position + dir * 5f);
-        agent.SetDestination(destinationPos);
-        agent.isStopped = false;
-
-        // ì¶”ì 
-        if (Vector3.Distance(this.transform.position, target.transform.position) < traceDistance)
+        if(status != eShooter2Status.Death)
         {
-            status = eShooter1Status.Idle;
-            agent.isStopped = true;
+            if(isArrived == true)
+            {
+                switch (patrolType)
+                {
+                    case PatrolType.Loop:
+                        {
+                            i_curPos++;
+                            if (i_curPos > posList.Length - 1) i_curPos = 0;
+                        }
+                        break;
+                    case PatrolType.YoYo:
+                        {
+
+                        }
+                        break;
+                }
+                agent.SetDestination(posList[i_curPos].position);
+                agent.isStopped = false;
+                isArrived = false;
+            }
+        }
+
+        if (Vector3.Distance(this.transform.position, posList[i_curPos].position) <= 0.2f)
+        {
+            isArrived = true;
         }
     }
 
@@ -111,7 +131,7 @@ public class Shooter1 : Enemy
         }
         else
         {
-            status = eShooter1Status.Idle;
+            status = eShooter2Status.Idle;
             curBulletCount = bulletCount;
             timer = idleTime;
         }
@@ -127,27 +147,12 @@ public class Shooter1 : Enemy
     }
 
 
-
-    //IEnumerator ShooterCoro()
-    //{
-    //    yield return new WaitForSeconds(idleTime);
-
-    //    int bulletCount = 5;
-    //    while (bulletCount > 0) 
-    //    {
-    //        Debug.Log("ì´ì•Œ ë°œì‚¬");
-    //        bulletCount--;
-    //        yield return new WaitForSeconds(0.1f);
-    //    }
-    //}    
-
-
     public override void Hit(int dmg)
     {
         base.Hit(dmg);
         if (hp <= 0)
         {
-            status = eShooter1Status.Death;
+            status = eShooter2Status.Death;
         }
     }
 }
