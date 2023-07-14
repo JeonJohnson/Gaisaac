@@ -13,6 +13,8 @@ public struct PlayerStat
     public int maxHp;
     public int curHp;
 
+    public int dmg;
+
     public float moveSpd;
 
     public float curConsumeRatio;
@@ -34,6 +36,9 @@ public struct PlayerStat
 public class Player : MonoBehaviour
 {
     public PlayerStat stat;
+
+
+    public Rigidbody2D rd;
 
     public float curAtkTime = 0f;
 
@@ -71,7 +76,6 @@ public class Player : MonoBehaviour
 
 	public void PlayerMove()
     {
-
         Vector2 moveDir = Vector2.zero;
 
 
@@ -100,7 +104,9 @@ public class Player : MonoBehaviour
 
         moveDir = moveDir.normalized * Time.deltaTime * stat.moveSpd;
 
-        transform.position += new Vector3(moveDir.x, moveDir.y, 0f);
+        //transform.position += new Vector3(moveDir.x, moveDir.y, 0f);
+        rd.velocity = moveDir;
+        
 	}
 
 	public void Aim()
@@ -114,7 +120,7 @@ public class Player : MonoBehaviour
         lookDir = (cursorWorldPos - transform.position);
         lookDir.Normalize();
 
-        Debug.Log(lookDir);
+        //Debug.Log(lookDir);
 
         fovSpriteTr.up = lookDir;
 	}
@@ -129,7 +135,7 @@ public class Player : MonoBehaviour
 				bulletObj.transform.position = transform.position + (new Vector3(lookDir.x, lookDir.y, 0f) * 2f);
 				Bullet_Player script = bulletObj.GetComponent<Bullet_Player>();
 
-				script.Fire(lookDir);
+				script.Fire(lookDir, stat.dmg);
 
 				--stat.bulletCnt;
 
@@ -249,11 +255,11 @@ public class Player : MonoBehaviour
 
 	private void LateUpdate()
 	{
-        PlayerMove();
     }
 
 	private void FixedUpdate()
 	{
+        PlayerMove();
         
     }
 

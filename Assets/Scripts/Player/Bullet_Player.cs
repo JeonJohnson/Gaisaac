@@ -9,14 +9,15 @@ public class Bullet_Player : MonoBehaviour
 
 	public float force;
 
+	public int dmg;
 
     public Rigidbody2D rd;
 
 
-	public void Fire(Vector2 dir)
+	public void Fire(Vector2 dir, int _dmg)
 	{
 		//transform.position = pos;
-
+		dmg = _dmg;
 		rd.AddForce(dir * force);
 	}
 
@@ -37,13 +38,25 @@ public class Bullet_Player : MonoBehaviour
 	void Start()
     {
 		StartCoroutine(DestoryCor());
-
 	}
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-		Debug.Log("面倒");
-        Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-		if(enemy != null) { enemy.Hit(1); Destroy(this.gameObject); }
-    }
+	//  private void OnTriggerEnter2D(Collider2D collision)
+	//  {
+	//Debug.Log("面倒");
+	//      Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+	//if(enemy != null) { enemy.Hit(1); Destroy(this.gameObject); }
+	//  }
+
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+		if (enemy != null)
+		{
+			Debug.Log("利苞 面倒");
+			enemy.Hit(dmg);
+			Destroy(this.gameObject);
+		}
+	}
+
+
 }
