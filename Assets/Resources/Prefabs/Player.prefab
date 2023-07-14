@@ -346,7 +346,7 @@ MonoBehaviour:
   stat:
     maxHp: 0
     curHp: 0
-    moveSpd: 2
+    moveSpd: 4
     curConsumeRatio: 0
     consumeTime: 0
     consumeAngle: 90
