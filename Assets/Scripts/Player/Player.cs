@@ -20,7 +20,7 @@ public struct PlayerStat
     //한번 눌르면 1/consumeTime 만큼 없애주면됨
 
     public float consumeAngle;
-    public float consumeRange;
+    public float consumeRange;//지름
 
     public int bulletCnt;
 
@@ -36,13 +36,15 @@ public class Player : MonoBehaviour
     public Transform spriteTr;
 
     public Material fovMat;
-    public Transform fovSprite;
+    public Transform fovSpriteTr;
 
     public GameObject bulletPrefab;
 
+    public Vector2 leftDir;
     public Vector2 lookDir;
+    public Vector2 rightDir;
 
-	public void Hit(int dmg)
+    public void Hit(int dmg)
 	{
         stat.curHp -= dmg;
 	}
@@ -99,7 +101,7 @@ public class Player : MonoBehaviour
         lookDir = (cursorWorldPos - transform.position).normalized;
 
 
-        fovSprite.up = lookDir;
+        fovSpriteTr.up = lookDir;
 
 	}
 
@@ -119,14 +121,55 @@ public class Player : MonoBehaviour
 
 
     public void Consume()
-    { 
-        
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            //stat.curConsumeRatio = stat.curConsumeRatio - (1f / stat.consumeTime);
+            
+            //float halfFovAngle = stat.consumeAngle * 0.5f;
+            //leftDir = DegreeAngle2Dir(fovSpriteTr.eulerAngles.z - halfFovAngle);
+            //rightDir = DegreeAngle2Dir(fovSpriteTr.eulerAngles.z + halfFovAngle);
+
+
+            var cols = Physics2D.OverlapCircleAll(transform.position, stat.consumeRange/2f,LayerMask.GetMask("Bullet_Enemy"));
+
+            foreach (var col in cols)
+            {
+                Vector3 targetPos = col.transform.position;
+                Vector2 targetDir = (targetPos - transform.position).normalized;
+
+
+                var temp = DegreeAngle2Dir(-fovSpriteTr.eulerAngles.z);
+                float angleToTarget = Mathf.Acos(Vector2.Dot(targetDir, temp)) * Mathf.Rad2Deg;
+
+                //내적해주고 나온 라디안 각도를 역코사인걸어주고 오일러각도로 변환.
+                if (angleToTarget <= (stat.consumeAngle * 0.5f))
+                {
+                    ++stat.bulletCnt;
+                }
+            }
+        }
+
     }
 
 
-	private void Awake()
+    public Vector3 DegreeAngle2Dir(float degreeAngle)
+    {
+        //각도를 벡터로 바꿔주는 거
+
+        //ex)회전되지 않은 오브젝트인 경우
+        //rotation의 y값 euler값 넣으면 forward Dir나옴.
+
+        //조금 더 자세한 내용은 벡터 내적, 외적 봐보셈
+
+        float radAngle = degreeAngle * Mathf.Deg2Rad;
+        return new Vector3(Mathf.Sin(radAngle), Mathf.Cos(radAngle));
+    }
+
+
+    private void Awake()
 	{
-        fovMat = fovSprite.GetComponent<SpriteRenderer>().material;
+        fovMat = fovSpriteTr.GetComponent<SpriteRenderer>().material;
 	}
 
 	// Start is called before the first frame update
@@ -139,13 +182,15 @@ public class Player : MonoBehaviour
     void Update()
     {
 
-        fovSprite.localScale = new Vector2(stat.consumeRange, stat.consumeRange);
+        fovSpriteTr.localScale = new Vector2(stat.consumeRange, stat.consumeRange);
         fovMat.SetFloat("_FovAngle", stat.consumeAngle);
 
 
         Aim();
 
         Fire();
+
+        Consume();
     }
 
 	private void LateUpdate()
@@ -157,4 +202,21 @@ public class Player : MonoBehaviour
 	{
         
     }
+
+    public void OnDrawGizmos()
+    {
+
+		float halfFovAngle = stat.consumeAngle * 0.5f;
+        float angle = -fovSpriteTr.eulerAngles.z;
+        leftDir = DegreeAngle2Dir(angle - halfFovAngle);
+		rightDir = DegreeAngle2Dir(angle + halfFovAngle);
+
+		Gizmos.DrawWireSphere(transform.position, halfFovAngle);
+
+		Debug.DrawRay(transform.position, leftDir.normalized * halfFovAngle, Color.black);
+		Debug.DrawRay(transform.position, lookDir.normalized * halfFovAngle, Color.green);
+		Debug.DrawRay(transform.position, rightDir.normalized * halfFovAngle, Color.cyan);
+
+	}
+
 }
