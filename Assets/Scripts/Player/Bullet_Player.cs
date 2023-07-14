@@ -13,7 +13,7 @@ public class Bullet_Player : MonoBehaviour
     public Rigidbody2D rd;
 
 
-	public void Fire(Vector2 pos, Vector2 dir)
+	public void Fire(Vector2 dir)
 	{
 		//transform.position = pos;
 

@@ -111,7 +111,10 @@ public class Player : MonoBehaviour
 
 		Vector3 cursorWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        lookDir = (cursorWorldPos - transform.position).normalized;
+        lookDir = (cursorWorldPos - transform.position);
+        lookDir.Normalize();
+
+        Debug.Log(lookDir);
 
         fovSpriteTr.up = lookDir;
 	}
@@ -123,10 +126,10 @@ public class Player : MonoBehaviour
 			if (stat.bulletCnt > 0 && curAtkTime >= stat.atkSpd)
 			{
 				GameObject bulletObj = Instantiate(bulletPrefab);
-				bulletObj.transform.position = transform.position;
+				bulletObj.transform.position = transform.position + (new Vector3(lookDir.x, lookDir.y, 0f) * 2f);
 				Bullet_Player script = bulletObj.GetComponent<Bullet_Player>();
 
-				script.Fire(transform.position, lookDir);
+				script.Fire(lookDir);
 
 				--stat.bulletCnt;
 
