@@ -2074,6 +2074,7 @@ MonoBehaviour:
     atkSpd: 0.2
   isDead: 0
   onHole: 0
+  fallCol: {fileID: 1585255737613403861}
   itemSystem: {fileID: 5095501291430268408}
   rd: {fileID: 2934485938537797540}
   curAtkTime: 0
@@ -2691,6 +2692,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1153553536326016743}
+  dampingDist: 25
 --- !u!1 &8402530705439697198
 GameObject:
   m_ObjectHideFlags: 0
