@@ -23,6 +23,8 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 		}
 	}
 
+	
+
 	public static T InstantiateManager(bool isDontDestroy)
 	{
 		//1. 하이어라키 창에 있는지 확인.
