@@ -18,9 +18,11 @@ public enum SCENE_NAME
 public class GameManager : Singleton<GameManager>
 {
 
+	public float BgmOffset = 1f;
+    public float SeOffset = 1f;
 
 
-	private void InitApp()
+    private void InitApp()
 	{ 
 	
 	}

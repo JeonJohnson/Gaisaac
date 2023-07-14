@@ -1062,8 +1062,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: c2b569beb17efe84f88bb3c57eb9175b, type: 3}
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -2180,6 +2180,19 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 9cc0086f0eff5964ca09323011bf9975, type: 3}
   - {fileID: 21300000, guid: 43e7d8bdbf8bb6047895ec2bfcc6ee85, type: 3}
   - {fileID: 21300000, guid: c2b569beb17efe84f88bb3c57eb9175b, type: 3}
+  itemName:
+  - "\uC9D1\uBAA8\uC591 \uD1A0\uAE30"
+  - "\uC0C8\uBAA8\uC591 \uD1A0\uAE30"
+  - "\uD310\uAC11\uC637"
+  - "\uAE08\uB3D9\uAD00"
+  - "\uB9D0\uAC16\uCDA4"
+  explain:
+  - "\uCD1D\uC54C \uD761\uC218 \uBC94\uC704 \uC99D\uAC00"
+  - "\uBD80\uD65C \uD69F\uC218 \uCD94\uAC00"
+  - "\uBCF4\uD638\uB9C9 \uD719\uB4DD"
+  - "\uBB34\uC801 10\uCD08"
+  - "\uB300\uC26C 3\uBC88 \uAC00\uB2A5!"
+  count: 0
 --- !u!1 &6986913938064411368
 GameObject:
   m_ObjectHideFlags: 0

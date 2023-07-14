@@ -56,6 +56,7 @@ public class Boss_Weapon : MonoBehaviour
             bulletCount++;
             curIndex += 10;
 
+            SoundManager.Instance.PlayTempSound("shoot", this.transform.position, 1f, 0.75f, 1f);
             GameObject bullet = Instantiate(bulletPrefab, firePos.position, Quaternion.identity);
 
             bullet.transform.eulerAngles = firePos.transform.eulerAngles;

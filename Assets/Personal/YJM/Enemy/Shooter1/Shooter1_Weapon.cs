@@ -19,6 +19,8 @@ public class Shooter1_Weapon : MonoBehaviour
 
     public void ShootBullet()
     {
+        SoundManager.Instance.PlayTempSound("shoot", this.transform.position, 1f, 0.75f, 1f);
+
         Vector3 dir = owner.target.transform.position - firePos.transform.position;
         dir.Normalize();
 
