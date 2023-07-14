@@ -12,7 +12,9 @@ GameObject:
   - component: {fileID: 248019747706064835}
   - component: {fileID: 3063091846776640233}
   - component: {fileID: 513809004182093909}
-  m_Layer: 0
+  - component: {fileID: 7145227693419482704}
+  - component: {fileID: 6365959471936513225}
+  m_Layer: 7
   m_Name: Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,13 +103,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 30
   speed: 1
-  idleTime: 5
+  idleTime: 4
   dps: 0.1
   bulletCount: 5
   dmg: 1
   spreadValue: 0
-  traceDistance: 12
-  shootingDistance: 15
+  traceDistance: 5
+  shootingDistance: 7
   timer: 0
   teleportTicket: 1
   weapon: {fileID: 4825780369133276364}
@@ -124,7 +126,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.32
-  m_Speed: 3.5
+  m_Speed: 1
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -136,6 +138,68 @@ NavMeshAgent:
   m_BaseOffset: 0.32
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!58 &7145227693419482704
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3819709366188183070}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.32
+--- !u!50 &6365959471936513225
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3819709366188183070}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &4128894084332257665
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,7 +330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa999e4cd62fd5349ba7bbd181aa7a0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 8053305120300827344, guid: f2ab6d39ae4cdf048b2f9445906d7909, type: 3}
+  bulletPrefab: {fileID: 656147100588692258, guid: 10424171d4b6d424b89101896eb6df6b, type: 3}
   owner: {fileID: 3063091846776640233}
   firePos: {fileID: 7484375110340591913}
   rotationSpeed: 360
