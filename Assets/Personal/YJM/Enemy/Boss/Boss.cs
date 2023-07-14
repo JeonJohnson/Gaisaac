@@ -74,7 +74,7 @@ public class Boss : Enemy
 
         if(InGameController.Instance.bossHpBar != null)
         {
-            InGameController.Instance.bossHpBar.UpdateHpBar(hp / maxHp);
+            InGameController.Instance.bossHpBar.UpdateHpBar((float)hp / (float)maxHp);
         }
     }
 
