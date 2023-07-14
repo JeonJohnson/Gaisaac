@@ -70,7 +70,9 @@ public class Player : MonoBehaviour
 
     public void Hit(int dmg)
 	{
-        stat.curHp -= dmg;
+        //stat.curHp -= dmg;
+        Debug.Log($"{dmg}만큼 딜 받음");
+        stat.curHp = Math.Clamp(stat.curHp - dmg, 0, 255);
 	}
 
 

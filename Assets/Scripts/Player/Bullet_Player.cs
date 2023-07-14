@@ -40,22 +40,30 @@ public class Bullet_Player : MonoBehaviour
 		StartCoroutine(DestoryCor());
 	}
 
-	//  private void OnTriggerEnter2D(Collider2D collision)
-	//  {
-	//Debug.Log("충돌");
-	//      Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-	//if(enemy != null) { enemy.Hit(1); Destroy(this.gameObject); }
-	//  }
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		//Debug.Log("트리거 충돌");
+		Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+		if (enemy != null) 
+		{ 
+			//Debug.Log("적과 충돌"); 
+			enemy.Hit(dmg); 
+			Destroy(this.gameObject); 
+		}
+	}
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
-		Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-		if (enemy != null)
+		//Debug.Log("콜리전 충돌");
+
+		Player player = collision.gameObject.GetComponent<Player>();
+
+		if (player)
 		{
-			Debug.Log("적과 충돌");
-			enemy.Hit(dmg);
+			player.Hit(dmg);
 			Destroy(this.gameObject);
 		}
+
 	}
 
 
