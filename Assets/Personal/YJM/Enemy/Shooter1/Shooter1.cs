@@ -75,7 +75,7 @@ public class Shooter1 : Enemy
         Vector3 dir = target.transform.position - transform.position;
         dir.Normalize();
         Vector3 destinationPos = (target.transform.position + dir * 5f);
-        //agent.SetDestination(destinationPos);
+        agent.SetDestination(destinationPos);
 
         // 추적
         if (Vector3.Distance(this.transform.position, target.transform.position) < traceDistance)
