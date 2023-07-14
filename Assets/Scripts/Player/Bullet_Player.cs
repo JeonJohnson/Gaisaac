@@ -40,4 +40,10 @@ public class Bullet_Player : MonoBehaviour
 
 	}
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+		Debug.Log("Ãæµ¹");
+        Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+		if(enemy != null) { enemy.Hit(1); Destroy(this.gameObject); }
+    }
 }
