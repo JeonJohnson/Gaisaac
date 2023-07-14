@@ -59,6 +59,7 @@ public class Boss_Weapon : MonoBehaviour
             GameObject bullet = Instantiate(bulletPrefab, firePos.position, Quaternion.identity);
 
             bullet.transform.eulerAngles = firePos.transform.eulerAngles;
+            //bullet.GetComponent<Bullet_Boss>().Fire(firePos.transform.eulerAngles, 1);
 
             if (bulletCount == 37)
             {
