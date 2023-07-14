@@ -997,6 +997,15 @@ namespace Enums
         Death,
 		End
     }
+
+    public enum eShooter2Status
+    {
+        Idle,
+        Patrol,
+        Attack,
+        Death,
+        End
+    }
 }
 
 namespace Structs
