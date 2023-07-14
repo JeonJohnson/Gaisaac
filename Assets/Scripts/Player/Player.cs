@@ -7,11 +7,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+
+
 [Serializable]
 public struct PlayerStat
 {
     public int maxHp;
     public int curHp;
+
+    public int maxArmor;
+    public int curArmor;
+
+
 
     public int dmg;
 
@@ -35,8 +42,11 @@ public struct PlayerStat
 
 public class Player : MonoBehaviour
 {
+    
     public PlayerStat stat;
     public bool isDead = false;
+
+    public PlayerItem itemSystem;
 
     public Rigidbody2D rd;
 
@@ -63,27 +73,72 @@ public class Player : MonoBehaviour
     
     [Header("UI")]
     public TextMeshProUGUI bulletCnt;
+    public Image consumeGauge;
 
+    [Header("Item")]
+    public GameObject itemIconHolder;
+    public Sprite itemIconSprite;
+    public TextMeshProUGUI itemName;
+    public TextMeshProUGUI itemExplain;
+
+
+    [Header("HP")]
     public Transform hpHolder;
     public List<Image> hpImgList;
     public Sprite fullHp;
     public Sprite emptyHp;
 
+    public TextMeshProUGUI lifeCnt;
+
+    [Header("Armor")]
+    public Transform armorHolder;
+    public List<Image> armorImgList;
+    public Sprite armorSprite;
+
+
+
 
 	public RectTransform crossHairHolder;
 
-    public Image consumeGauge;
 
+    public void Revive()
+    {
+        stat.curHp = stat.maxHp;
+
+        //깜빡이고 잠시 몇초간 무적
+    }
 
     public void Hit(int dmg)
 	{
+        if (itemSystem.curState == PlayerItemState.God)
+        {
+            return;
+        }
+        
+
         //stat.curHp -= dmg;
         Debug.Log($"{dmg}만큼 딜 받음");
-        stat.curHp = Math.Clamp(stat.curHp - dmg, 0, stat.maxHp);
 
-        if (stat.curHp <= 0)
+        if (stat.curArmor > 0)
         {
-            isDead = true;
+            --stat.curArmor;
+        }
+        else
+        {
+
+            stat.curHp = Math.Clamp(stat.curHp - dmg, 0, stat.maxHp);
+
+            if (stat.curHp <= 0)
+            {
+                if (itemSystem.curState == PlayerItemState.OneMoreChance)
+                {
+                    itemSystem.ReturnNormal(PlayerItemState.OneMoreChance);
+                }
+                else
+                {
+                    isDead = true;
+                }
+            }
         }
 	}
 
@@ -272,8 +327,18 @@ public class Player : MonoBehaviour
             {
                 hpImgList[i].gameObject.SetActive(false);
             }
+        }
 
-
+        for (int i = 0; i < armorImgList.Count; ++i)
+        {
+            if (i < stat.curArmor)
+            {
+                armorImgList[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                armorImgList[i].gameObject.SetActive(false);
+            }
         }
     }
 
@@ -291,7 +356,13 @@ public class Player : MonoBehaviour
             hpImgList.Add(hpHolder.GetChild(i).GetComponent<Image>());
         }
 
+        armorImgList = new List<Image>();
+        for (int i = 0; i < armorHolder.childCount; ++i)
+        {
+            armorImgList.Add(armorHolder.GetChild(i).GetComponent<Image>());
+        }
 
+        lifeCnt.text = "";
     }
 
 	// Start is called before the first frame update
