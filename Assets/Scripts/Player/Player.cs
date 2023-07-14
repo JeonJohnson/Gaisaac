@@ -36,7 +36,7 @@ public struct PlayerStat
 public class Player : MonoBehaviour
 {
     public PlayerStat stat;
-
+    public bool isDead = false;
 
     public Rigidbody2D rd;
 
@@ -62,8 +62,14 @@ public class Player : MonoBehaviour
     
     [Header("UI")]
     public TextMeshProUGUI bulletCnt;
-    public List<Image> hpList;
-    public RectTransform crossHairHolder;
+
+    public Transform hpHolder;
+    public List<Image> hpImgList;
+    public Sprite fullHp;
+    public Sprite emptyHp;
+
+
+	public RectTransform crossHairHolder;
 
     public Image consumeGauge;
 
@@ -72,7 +78,12 @@ public class Player : MonoBehaviour
 	{
         //stat.curHp -= dmg;
         Debug.Log($"{dmg}만큼 딜 받음");
-        stat.curHp = Math.Clamp(stat.curHp - dmg, 0, 255);
+        stat.curHp = Math.Clamp(stat.curHp - dmg, 0, stat.maxHp);
+
+        if (stat.curHp <= 0)
+        {
+            isDead = true;
+        }
 	}
 
 
@@ -153,13 +164,23 @@ public class Player : MonoBehaviour
     {
         if (stat.curConsumeRatio <= 0f)
         {
-            Charging();
+            if (!Input.GetMouseButton(1))
+            {
+                Charging();
+            }
         }
         else
         {
             if (Input.GetMouseButton(1))
             {
-                stat.curConsumeRatio -= (1f / stat.consumeTime) * Time.deltaTime;
+                float amount = (1f / stat.consumeTime) * Time.deltaTime;
+
+                if (stat.curConsumeRatio < amount)
+                {
+                    return;
+                }
+
+                stat.curConsumeRatio -= amount;
                 stat.curConsumeRatio  = Mathf.Clamp(stat.curConsumeRatio, 0f, 1f);
 
                 var cols = Physics2D.OverlapCircleAll(transform.position, stat.consumeRange / 2f, LayerMask.GetMask("Bullet_Enemy"));
@@ -218,11 +239,47 @@ public class Player : MonoBehaviour
     }
 
 
+    public void UpdateHpUI()
+    {
+        for (int i = 0; i < hpImgList.Count; ++i)
+        {
+            if (i < stat.maxHp)
+            {
+                hpImgList[i].gameObject.SetActive(true);
+
+                if (i < stat.curHp)
+                {
+                    hpImgList[i].sprite = fullHp;
+                }
+                else
+                {
+                    hpImgList[i].sprite = emptyHp;
+                }
+
+            }
+            else
+            {
+                hpImgList[i].gameObject.SetActive(false);
+            }
+
+
+        }
+    }
+
     private void Awake()
 	{
         fovMat = fovSpriteTr.GetComponent<SpriteRenderer>().material;
 
         stat.curConsumeRatio = 1f;
+
+
+        hpImgList = new List<Image>();
+
+        for (int i = 0; i < hpHolder.childCount; ++i)
+        {
+            hpImgList.Add(hpHolder.GetChild(i).GetComponent<Image>());
+        }
+
 
     }
 
@@ -253,6 +310,11 @@ public class Player : MonoBehaviour
 
         consumeGauge.fillAmount = stat.curConsumeRatio;
         bulletCnt.text = $"총알 : {stat.bulletCnt}";
+
+
+        UpdateHpUI();
+
+
     }
 
 	private void LateUpdate()
