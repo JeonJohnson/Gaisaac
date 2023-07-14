@@ -33,10 +33,14 @@ public class Shooter1 : Enemy
         status = eShooter1Status.Idle;
         timer = idleTime;
         if (agent == null) agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
     }
 
     public override void Update()
     {
+        Vector3 dir = new Vector3(0f, 0f, 0f);
+        transform.eulerAngles = new Vector3(0f, 0f, 0f);
+
         base.Update();
         switch (status)
         {
@@ -72,11 +76,16 @@ public class Shooter1 : Enemy
 
     private void Trace()
     {
+        Vector3 dir = target.transform.position - transform.position;
+        dir.Normalize();
+        Vector3 destinationPos = (target.transform.position + dir * 5f);
+        agent.SetDestination(destinationPos);
+
         // 추적
         if (Vector3.Distance(this.transform.position, target.transform.position) < traceDistance)
         {
             status = eShooter1Status.Idle;
-           // agent.SetDestination()
+            agent.isStopped = true;
         }
     }
 
