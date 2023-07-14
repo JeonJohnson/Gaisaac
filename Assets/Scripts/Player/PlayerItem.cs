@@ -34,7 +34,6 @@ public class PlayerItem : MonoBehaviour
 			case PlayerItemState.None:
 				{
 					player.itemIconHolder.SetActive(false);
-
 				}
 				break;
 			case PlayerItemState.ConsumeRangeUp:
