@@ -23,13 +23,13 @@ public class ObjectManager : Singleton<ObjectManager>
 
 	private void Awake()
 	{
-        FindPlayer();
+        
 	}
 
 	// Start is called before the first frame update
 	void Start()
     {
-        
+        FindPlayer();
     }
 
     // Update is called once per frame
