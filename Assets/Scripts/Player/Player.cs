@@ -33,8 +33,14 @@ public class Player : MonoBehaviour
 {
     public PlayerStat stat;
 
+    public Transform spriteTr;
+
     public Material fovMat;
     public Transform fovSprite;
+
+    public GameObject bulletPrefab;
+
+    public Vector2 lookDir;
 
 	public void Hit(int dmg)
 	{
@@ -56,6 +62,7 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             moveDir += Vector2.left ;
+            spriteTr.localScale = new Vector3(-1f, 1f, 1f);
         }
 
         if (Input.GetKey(KeyCode.S))
@@ -66,6 +73,8 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             moveDir += Vector2.right ;
+
+            spriteTr.localScale = new Vector3(1f, 1f, 1f);
         }
 
         moveDir = moveDir.normalized * Time.deltaTime * stat.moveSpd;
@@ -85,23 +94,28 @@ public class Player : MonoBehaviour
 
 		Vector3 cursorWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-		//fovSprite.LookAt(cursorWorldPos);
+        //fovSprite.LookAt(cursorWorldPos);
 
-		Vector2 dir = (cursorWorldPos - transform.position).normalized;
+        lookDir = (cursorWorldPos - transform.position).normalized;
 
-        //Debug.Log(dir);
 
-        fovSprite.up = dir;
-
+        fovSprite.up = lookDir;
 
 	}
 
 	public void Fire()
-    { 
-        
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            GameObject bulletObj = Instantiate(bulletPrefab);
+            bulletObj.transform.position = transform.position;
+            Bullet_Player script = bulletObj.GetComponent<Bullet_Player>();
 
-
+            script.Fire(transform.position, lookDir);
+        }
     }
+
+    
 
 
     public void Consume()
@@ -131,7 +145,7 @@ public class Player : MonoBehaviour
 
         Aim();
 
-
+        Fire();
     }
 
 	private void LateUpdate()

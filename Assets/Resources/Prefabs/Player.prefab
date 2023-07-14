@@ -68,7 +68,7 @@ Camera:
   far clip plane: 100
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -166,7 +166,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 101
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 0.7921569}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.45490196}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -186,7 +186,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7999888058861234172}
   - component: {fileID: 1303449141680202273}
-  - component: {fileID: 6342040360189407971}
+  - component: {fileID: 7076553891266714791}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -250,19 +250,19 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 100
-  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5cd8dcad5f5df2d48b093636298aff2a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &6342040360189407971
-CapsuleCollider2D:
+--- !u!58 &7076553891266714791
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -294,8 +294,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
-  m_Direction: 0
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &6694291701332606511
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,5 +353,8 @@ MonoBehaviour:
     consumeRange: 4
     bulletCnt: 0
     atkSpd: 0.2
+  spriteTr: {fileID: 7999888058861234172}
   fovMat: {fileID: 2100000, guid: 9c3bfa4de4bea3b4182c49617457e636, type: 2}
   fovSprite: {fileID: 2135782684704119016}
+  bulletPrefab: {fileID: 656147100588692258, guid: 20c156f89aeca0e40acc069d0e6a28fb, type: 3}
+  lookDir: {x: 0, y: 0}

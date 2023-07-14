@@ -12,7 +12,7 @@
 		_FovAngle("FovAngle", Range(0,360)) = 90
 	}
 
-	SubShader
+	SubShader	
 	{
 		Tags
 		{ 
