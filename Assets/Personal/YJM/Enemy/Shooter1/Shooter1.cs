@@ -33,10 +33,14 @@ public class Shooter1 : Enemy
         status = eShooter1Status.Idle;
         timer = idleTime;
         if (agent == null) agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
     }
 
     public override void Update()
     {
+        Vector3 dir = new Vector3(0f, 0f, 0f);
+        transform.eulerAngles = new Vector3(0f, 0f, 0f);
+
         base.Update();
         switch (status)
         {
