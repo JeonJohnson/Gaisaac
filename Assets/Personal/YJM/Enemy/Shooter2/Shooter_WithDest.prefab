@@ -380,9 +380,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a0597dbc08ee0a40b22173aca622ccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 3
+  hp: 9
   speed: 2
-  idleTime: 10
+  idleTime: 5
   dps: 0.1
   bulletCount: 15
   dmg: 1
