@@ -113,7 +113,7 @@ MonoBehaviour:
   force: 200
   dmg: 1
   rd: {fileID: 5441437564097829627}
-  collisionCount: 3
+  collisionCount: 2
 --- !u!1 &5245118582454813782
 GameObject:
   m_ObjectHideFlags: 0

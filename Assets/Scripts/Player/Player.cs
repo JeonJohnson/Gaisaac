@@ -171,12 +171,20 @@ public class Player : MonoBehaviour
             spriteTr.localScale = new Vector3(1f, 1f, 1f);
         }
 
+        Vector3 newDir = moveDir;
+
         moveDir = moveDir.normalized * Time.deltaTime * stat.moveSpd;
 
         //transform.position += new Vector3(moveDir.x, moveDir.y, 0f);
         rd.velocity = moveDir;
-        
-	}
+
+
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            Debug.Log("N");
+            rd.AddForce(newDir * 10, ForceMode2D.Impulse);
+        }
+    }
 
 	public void Aim()
 	{
