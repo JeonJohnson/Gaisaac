@@ -16,7 +16,7 @@ public class Obj_AutoReturn : MonoBehaviour
         while(true)
         {
             yield return new WaitForSeconds(returnTime);
-            //
+            Destroy(this.gameObject);
             break;
         }
     }
