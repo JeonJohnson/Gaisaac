@@ -77,7 +77,7 @@ public class Player : MonoBehaviour
 
     [Header("Item")]
     public GameObject itemIconHolder;
-    public Sprite itemIconSprite;
+    public Image itemIconSprite;
     public TextMeshProUGUI itemName;
     public TextMeshProUGUI itemExplain;
 
@@ -171,7 +171,9 @@ public class Player : MonoBehaviour
             spriteTr.localScale = new Vector3(1f, 1f, 1f);
         }
 
-        moveDir = moveDir.normalized * Time.deltaTime * stat.moveSpd;
+
+
+        moveDir = moveDir.normalized * Time.deltaTime * stat.moveSpd * Dash();
 
         //transform.position += new Vector3(moveDir.x, moveDir.y, 0f);
         rd.velocity = moveDir;
@@ -213,8 +215,27 @@ public class Player : MonoBehaviour
 		}
 	}
 
-    
 
+    public float Dash()
+    {
+        if (itemSystem.curState != PlayerItemState.Dash)
+        {
+            return 1f;
+        }
+
+        if (itemSystem.count <= 0)
+        {
+            return 1f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            --itemSystem.count;
+            return 10f;
+        }
+
+        return 1f;
+    }
 
     public void Consume()
     {
