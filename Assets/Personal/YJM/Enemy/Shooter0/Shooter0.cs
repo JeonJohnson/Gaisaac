@@ -117,11 +117,11 @@ public class Shooter0 : Enemy
     //    }
     //}    
 
-
     public override void Hit(int dmg)
     {
         base.Hit(dmg);
-        if(hp <= 0)
+
+        if (hp <= 0)
         {
             status = eShooter0Status.Death;
         }

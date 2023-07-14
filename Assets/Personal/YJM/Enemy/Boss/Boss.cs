@@ -32,8 +32,9 @@ public class Boss : Enemy
 
     public eBossStatus status;
 
-    private void Start()
+    public override void Start()
     {
+        base.Start();
         if (target == null)
             target = ObjectManager.Instance.player;
 
@@ -69,6 +70,11 @@ public class Boss : Enemy
             case eBossStatus.Death:
                 Death();
                 break;
+        }
+
+        if(InGameController.Instance.bossHpBar != null)
+        {
+            InGameController.Instance.bossHpBar.UpdateHpBar(hp / maxHp);
         }
     }
 

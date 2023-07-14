@@ -12,6 +12,10 @@ public class Door : MonoBehaviour
     public void Open()
     {
         enterModel.SetActive(false);
+        if (InGameController.Instance.curRound == 2)
+        {
+            InGameController.Instance.bossHpBar.gameObject.SetActive(true);
+        }
     }
 
 

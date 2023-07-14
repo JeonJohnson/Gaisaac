@@ -13,6 +13,7 @@ public class Bullet_Player : MonoBehaviour
 
     public Rigidbody2D rd;
 
+	bool isTrigged = false;
 
 	public void Fire(Vector2 dir, int _dmg)
 	{
@@ -44,10 +45,11 @@ public class Bullet_Player : MonoBehaviour
 	{
 		//Debug.Log("트리거 충돌");
 		Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-		if (enemy != null) 
-		{ 
-			//Debug.Log("적과 충돌"); 
-			enemy.Hit(dmg); 
+		if (enemy != null && !isTrigged) 
+		{
+			isTrigged = true;
+            //Debug.Log("적과 충돌"); 
+            enemy.Hit(dmg); 
 			Destroy(this.gameObject); 
 		}
 	}

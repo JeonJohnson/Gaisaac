@@ -25,6 +25,8 @@ public class InGameController : MonoBehaviour
     public WinCanvas winCanvas;
     public LoseCanvas loseCanvas;
 
+    public Boss_HpBar bossHpBar;
+
     private void Update()
     {
         if (!isEnd)
