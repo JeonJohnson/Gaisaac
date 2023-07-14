@@ -16,6 +16,7 @@ public class Shooter0 : Enemy
     [SerializeField] float timer = 0f;
 
     [SerializeField] GameObject bulletPrefab;
+    [SerializeField] Player target;
 
 
     public eShooter0Status status;
@@ -91,8 +92,14 @@ public class Shooter0 : Enemy
 
     private void ShootBullet()
     {
-        Vector3 rot = new Vector3(0f, 0f, Random.Range(0, 360f));
-        GameObject go = Instantiate(bulletPrefab, this.transform.position, Quaternion.Euler(rot));
+        Vector3 dir = target.transform.position - this.transform.position;
+        dir.Normalize();
+
+        float rnd = Random.Range(-32.5f, 32.5f);
+        Quaternion rndRot = Quaternion.Euler(0f, 0f, rnd);
+
+        Debug.Log(Quaternion.LookRotation(Vector3.forward, dir));
+        GameObject go = Instantiate(bulletPrefab, this.transform.position, Quaternion.LookRotation(Vector3.forward,dir) * rndRot);
         go.GetComponent<Bullet_Enemy>().dmg = this.dmg;
     }
 

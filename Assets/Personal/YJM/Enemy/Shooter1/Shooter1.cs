@@ -1,7 +1,8 @@
-using Enums;
+﻿using Enums;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Shooter1 : Enemy
 {
@@ -12,20 +13,26 @@ public class Shooter1 : Enemy
     public int dmg = 1;
     bool isDead = false;
 
+    [Header("RangeSetting")]
+    [SerializeField] float traceDistance = 12f; // 어느 거리까지 추적할것인가
+    [SerializeField] float shootingDistance = 15f; // 어느범위까지 멀어지면 추적 시작할것인가
+
     [SerializeField] float timer = 0f;
 
     [SerializeField] Shooter1_Weapon weapon;
-    [SerializeField] GameObject bulletPrefab;
 
-    [SerializeField] Transform targetTr;
+    public Player target;
 
+    [Header("NavAI")]
+    [SerializeField] NavMeshAgent agent;
 
-    public eShooter0Status status;
+    public eShooter1Status status;
 
     private void Start()
     {
-        status = eShooter0Status.Idle;
+        status = eShooter1Status.Idle;
         timer = idleTime;
+        if (agent == null) agent = GetComponent<NavMeshAgent>();
     }
 
     public override void Update()
@@ -33,14 +40,17 @@ public class Shooter1 : Enemy
         base.Update();
         switch (status)
         {
-            case eShooter0Status.Idle:
-                    Idle();
+            case eShooter1Status.Idle:
+                Idle();
                 break;
-            case eShooter0Status.Attack:
-                    Attack();
+            case eShooter1Status.Trace:
+                Trace();
                 break;
-            case eShooter0Status.Death:
-                    Death();
+            case eShooter1Status.Attack:
+                Attack();
+                break;
+            case eShooter1Status.Death:
+                Death();
                 break;
         }
     }
@@ -50,8 +60,23 @@ public class Shooter1 : Enemy
         timer -= Time.deltaTime;
         if (timer < 0f)
         {
-            status = eShooter0Status.Attack;
+            status = eShooter1Status.Attack;
             timer = dps;
+        }
+
+        if (Vector3.Distance(this.transform.position, target.transform.position) > shootingDistance)
+        {
+            status = eShooter1Status.Trace;
+        }
+    }
+
+    private void Trace()
+    {
+        // 추적
+        if (Vector3.Distance(this.transform.position, target.transform.position) < traceDistance)
+        {
+            status = eShooter1Status.Idle;
+           // agent.SetDestination()
         }
     }
 
@@ -63,14 +88,14 @@ public class Shooter1 : Enemy
         {
             if (timer <= 0f)
             {
-                //ShootBullet();
+                weapon.ShootBullet();
                 bulletCount--;
                 timer = dps;
             }
         }
         else
         {
-            status = eShooter0Status.Idle;
+            status = eShooter1Status.Idle;
             bulletCount = 5;
             timer = idleTime;
         }
@@ -94,7 +119,7 @@ public class Shooter1 : Enemy
     //    int bulletCount = 5;
     //    while (bulletCount > 0) 
     //    {
-    //        Debug.Log("�Ѿ� �߻�");
+    //        Debug.Log("총알 발사");
     //        bulletCount--;
     //        yield return new WaitForSeconds(0.1f);
     //    }
@@ -106,7 +131,7 @@ public class Shooter1 : Enemy
         base.Hit(dmg);
         if (hp <= 0)
         {
-            status = eShooter0Status.Death;
+            status = eShooter1Status.Death;
         }
     }
 }
