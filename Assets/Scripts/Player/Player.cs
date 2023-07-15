@@ -64,6 +64,10 @@ public class Player : MonoBehaviour
     public Coroutine godCor;
     public BlinkEffector bilnker;
 
+    private bool isWalking = false;
+    [SerializeField] SpriteRenderer playerRenderer;
+    [SerializeField] Sprite[] playerImages; //0 : idle, // 1 : idle, walk0 // 2 : walk1
+
     public void GodModeOn(float time)
     {
         if (godCor != null)
@@ -234,8 +238,13 @@ public class Player : MonoBehaviour
 
         isDead = true;
     }
-    
 
+
+    private float walkTime = 0.25f;
+    private float walkTimer = 0f;
+
+    private float breathTime = 0.2f;
+    private float breathTimer = 0f;
 
 	public void PlayerMove()
     {
@@ -262,6 +271,41 @@ public class Player : MonoBehaviour
             moveDir += Vector2.right ;
 
             spriteTr.localScale = new Vector3(1f, 1f, 1f);
+        }
+
+        if(moveDir != Vector2.zero)
+        {
+            isWalking = true;
+            walkTimer -= Time.deltaTime;
+            if (walkTimer >= 0f)
+            {
+                playerRenderer.sprite = playerImages[2];
+            }
+            else
+            {
+                playerRenderer.sprite = playerImages[0];
+                if(walkTimer <= -walkTime)
+                {
+                    walkTimer = walkTime;
+                }
+            }
+        }
+        else
+        {
+            isWalking = false;
+            breathTimer -= Time.deltaTime;
+            if (breathTimer >= 0f)
+            {
+                playerRenderer.sprite = playerImages[1];
+            }
+            else
+            {
+                playerRenderer.sprite = playerImages[0];
+                if (breathTimer <= -breathTime)
+                {
+                    breathTimer = breathTime;
+                }
+            }
         }
 
         if (onHole && moveDir != Vector2.zero)

@@ -33,6 +33,8 @@ public class InGameController : MonoBehaviour
 
     public PPController ppController;
 
+    public GameObject roundClearWindow;
+
     private void Start()
     {
         Cursor.visible = false;
@@ -110,8 +112,21 @@ public class InGameController : MonoBehaviour
             {
                 Time.timeScale = 1f;
                 bloom.threshold.value = 0.9f;
-                yield break;
+                break;
             }
         }
+
+        yield return new WaitForSeconds(0.1f);
+        roundClearWindow.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        roundClearWindow.SetActive(false);
+        yield return new WaitForSeconds(1f);
+        roundClearWindow.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        roundClearWindow.SetActive(false);
+        yield return new WaitForSeconds(1f);
+        roundClearWindow.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        roundClearWindow.SetActive(false);
     }
 }
