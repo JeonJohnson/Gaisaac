@@ -109,9 +109,9 @@ public class PlayerItem : MonoBehaviour
 				break;
 		}
 
-
-
-	}
+		InGameController.Instance.itemPopUpWindow.gameObject.SetActive(true);
+        InGameController.Instance.itemPopUpWindow.InitItem();
+    }
 
 	public void ReturnNormal(PlayerItemState preEffect)
 	{

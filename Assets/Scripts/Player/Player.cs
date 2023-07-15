@@ -551,7 +551,4 @@ public class Player : MonoBehaviour
 		Debug.DrawRay(transform.position, rightDir.normalized * halfFovAngle, Color.cyan);
 
 	}
-
-
-
 }
