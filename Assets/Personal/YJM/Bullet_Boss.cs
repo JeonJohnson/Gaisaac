@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Bullet_Boss : MonoBehaviour
+public class Bullet_Boss : MonoBehaviour, BulletInterface
 {
+    public bool isConsumed = false;
+
+
     public float destoryTime;
 
     public float force;
@@ -79,4 +82,12 @@ public class Bullet_Boss : MonoBehaviour
         if(collisionCount <= 0) Destroy(this.gameObject);
     }
 
+	public void Consumed(Vector2 goalPos)
+	{
+        isConsumed = true;
+
+        rd.velocity = Vector2.zero;
+
+
+	}
 }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2823488019373996596}
   - component: {fileID: 2678549798959512928}
   m_Layer: 0
-  m_Name: Bird_Jar
+  m_Name: Item_Bird_Jar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

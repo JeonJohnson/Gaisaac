@@ -100,17 +100,24 @@ public class Player : MonoBehaviour
     }
 
 
-    
-    [Header("FOV")]
-    public Material fovMat;
-    public Transform fovSpriteTr;
-    public SpriteRenderer fovRdr;
 
+    [Header("Consume_FOV")]
+    public Transform consumeHolder;
+
+    [Space(5f)]
+    //public Transform fovTr;
+    public SpriteRenderer fovSRDR;
+    public Material fovMat;
     public Vector2 leftDir;
     public Vector2 lookDir;
     public Vector2 rightDir;
+    [Space(5f)]
+    public Transform jarMouthTr;
 
-    public List<GameObject> consumeList = new List<GameObject>();
+    [Space(5f)]
+    public Transform bulletHolder;
+
+    //public List<GameObject> consumeList = new List<GameObject>();
 
 
     [Header("Bullet")]
@@ -283,7 +290,7 @@ public class Player : MonoBehaviour
 
         //Debug.Log(lookDir);
 
-        fovSpriteTr.up = lookDir;
+        consumeHolder.up = lookDir;
 	}
 
 	public void Fire()
@@ -364,19 +371,38 @@ public class Player : MonoBehaviour
                     Vector3 targetPos = col.transform.position;
                     Vector2 targetDir = (targetPos - transform.position).normalized;
 
-                    var tempLookDir = DegreeAngle2Dir(-fovSpriteTr.eulerAngles.z);
+                    var tempLookDir = DegreeAngle2Dir(-consumeHolder.eulerAngles.z);
                     //lookDir랑 값다른데 이거로 적용됨 일단 나중에 ㄱ
                     float angleToTarget = Mathf.Acos(Vector2.Dot(targetDir, tempLookDir)) * Mathf.Rad2Deg;
 
 					//내적해주고 나온 라디안 각도를 역코사인걸어주고 오일러각도로 변환.
 					if (angleToTarget <= (stat.consumeAngle * 0.5f))
 					{
-						if (col.gameObject.activeSelf)
-						{
-							col.gameObject.SetActive(false);
-							GameObject.Destroy(col.gameObject);
-							++stat.bulletCnt;
-						}
+                        if (col.gameObject.GetComponent<Bullet_Enemy>())
+                        {
+                            var script = col.gameObject.GetComponent<Bullet_Enemy>();
+
+                            if (!script.isConsumed)
+                            { 
+                                script.Consumed(this);
+                                //script.transform.SetParent(bulletHolder);
+                            }
+
+                        }
+                        //else if (col.gameObject.GetComponent<Bullet_Boss>())
+                        //{
+                        //    var script = col.gameObject.GetComponent<Bullet_Boss>();
+                            
+                        //    if (!script.isConsumed)
+                        //    { script.Consumed(jarMouthTr.position); }
+                        //}
+
+						//if (col.gameObject.activeSelf)
+						//{
+						//	col.gameObject.SetActive(false);
+						//	GameObject.Destroy(col.gameObject);
+						//	++stat.bulletCnt;
+						//}
 
 					}
 				}
@@ -453,7 +479,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
 	{
-        fovMat = fovSpriteTr.GetComponent<SpriteRenderer>().material;
+        fovMat = fovSRDR.GetComponent<SpriteRenderer>().material;
 
         stat.curConsumeRatio = 1f;
 
@@ -483,7 +509,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        fovSpriteTr.localScale = new Vector2(stat.consumeRange, stat.consumeRange);
+        fovSRDR.transform.localScale = new Vector2(stat.consumeRange, stat.consumeRange);
         fovMat.SetFloat("_FovAngle", stat.consumeAngle);
 
 
@@ -539,8 +565,9 @@ public class Player : MonoBehaviour
 	public void OnDrawGizmos()
     {
 
-		float halfFovAngle = stat.consumeAngle * 0.5f;
-        float angle = -fovSpriteTr.eulerAngles.z;
+#if UNITY_EDITOR
+        float halfFovAngle = stat.consumeAngle * 0.5f;
+        float angle = -consumeHolder.eulerAngles.z;
         leftDir = DegreeAngle2Dir(angle - halfFovAngle);
 		rightDir = DegreeAngle2Dir(angle + halfFovAngle);
 
@@ -549,8 +576,9 @@ public class Player : MonoBehaviour
 		Debug.DrawRay(transform.position, leftDir.normalized * halfFovAngle, Color.black);
 		Debug.DrawRay(transform.position, lookDir.normalized * halfFovAngle, Color.green);
 		Debug.DrawRay(transform.position, rightDir.normalized * halfFovAngle, Color.cyan);
+#endif
 
-	}
+    }
 
 
 
