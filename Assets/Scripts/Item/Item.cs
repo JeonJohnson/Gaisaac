@@ -6,7 +6,6 @@ public class Item : MonoBehaviour
 {
     public PlayerItemState ItemEffect;
 
-	
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
