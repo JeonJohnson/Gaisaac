@@ -2319,7 +2319,8 @@ MonoBehaviour:
     dmg: 1
     moveSpd: 150
     curConsumeRatio: 1
-    consumeTime: 5
+    consumeTime: 3.5
+    chargingTime: 5
     consumeAngle: 30
     consumeRange: 4
     bulletCnt: 0

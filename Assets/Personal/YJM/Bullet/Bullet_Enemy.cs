@@ -62,17 +62,6 @@ public class Bullet_Enemy : MonoBehaviour
 						Destroy(this.gameObject);
 						curState = BulletState.End;
 					}
-
-                    //if (dist <= 0.1f)
-                    //{
-                    //    ++player.stat.bulletCnt;
-
-                    //    Destroy(this.gameObject);
-
-                    //    curState = BulletState.End;
-                    //}
-
-
                 }
 				break;
 			case BulletState.End:
@@ -80,15 +69,7 @@ public class Bullet_Enemy : MonoBehaviour
 			default:
 				break;
 		}
-		//if (curState == BulletState.Fire)
-		//{
-		//	this.transform.position += transform.up * Time.deltaTime * speed;
-		//}
-		//else if ( curState == BulletState.ConsumeWait)
-		//      { 
 
-		//      }
-		//      else if()
 
 	}
 

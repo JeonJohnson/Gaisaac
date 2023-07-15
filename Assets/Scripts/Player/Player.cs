@@ -29,6 +29,7 @@ public struct PlayerStat
     //흡수 게이지는 normalize 된 0 ~ 1 사이이고
     //관리하는건 쭉 눌렀을 때 다 소모되는 시간
     //한번 눌르면 1/consumeTime 만큼 없애주면됨
+    public float chargingTime;
 
     public float consumeAngle;
     public float consumeRange;//지름
@@ -218,13 +219,15 @@ public class Player : MonoBehaviour
         {
             Vector2 scale = spriteTr.localScale;
 
-            if (scale.x <= 0f)
+            if (scale.y <= 0f)
             {
                 break;
             }
-
-            scale -= Time.deltaTime * Vector2.one;
+            scale.x = scale.x < 0 ? scale.x + Time.deltaTime : scale.x - Time.deltaTime;
+            scale.y -= Time.deltaTime;
             spriteTr.localScale = scale;
+
+            spriteTr.Rotate(new Vector3(0f, 0f, 10f));
 
             yield return null;
         }
@@ -385,17 +388,16 @@ public class Player : MonoBehaviour
                             if (!script.isConsumed)
                             { 
                                 script.Consumed(this);
-                                //script.transform.SetParent(bulletHolder);
                             }
 
                         }
-                        //else if (col.gameObject.GetComponent<Bullet_Boss>())
-                        //{
-                        //    var script = col.gameObject.GetComponent<Bullet_Boss>();
-                            
-                        //    if (!script.isConsumed)
-                        //    { script.Consumed(jarMouthTr.position); }
-                        //}
+						else if (col.gameObject.GetComponent<Bullet_Boss>())
+						{
+							var script = col.gameObject.GetComponent<Bullet_Boss>();
+
+							if (!script.isConsumed)
+							{ script.Consumed(this); }
+						}
 
 						//if (col.gameObject.activeSelf)
 						//{
@@ -415,14 +417,12 @@ public class Player : MonoBehaviour
                 //fovRdr.color = temp;
             }
         }
-        
-
 
     }
 
     public void Charging()
     {
-        stat.curConsumeRatio = Mathf.Clamp(stat.curConsumeRatio + Time.deltaTime, 0f, 1f);
+        stat.curConsumeRatio = Mathf.Clamp(stat.curConsumeRatio + (1/stat.chargingTime * Time.deltaTime) , 0f, 1f);
     }
 
 

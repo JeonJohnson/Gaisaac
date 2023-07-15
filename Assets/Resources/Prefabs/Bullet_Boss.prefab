@@ -109,6 +109,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56a8451ba3a20434189d60eebb23bde3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isConsumed: 0
+  waitTime: 0
+  player: {fileID: 0}
+  curState: 0
+  moveTime: 0
+  col: {fileID: 3710037602633667309}
+  sRDR: {fileID: 6875805226204606332}
   destoryTime: 10
   force: 200
   dmg: 1

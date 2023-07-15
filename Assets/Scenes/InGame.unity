@@ -3628,7 +3628,7 @@ Transform:
   - {fileID: 6522361}
   - {fileID: 189832123}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &892158952
 GameObject:
@@ -58368,22 +58368,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 769071089210055781, guid: 38af3491307f6ff489dc71aea769da7a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1303449141680202273, guid: 38af3491307f6ff489dc71aea769da7a, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1303449141680202273, guid: 38af3491307f6ff489dc71aea769da7a, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1303449141680202273, guid: 38af3491307f6ff489dc71aea769da7a, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1451385690184018436, guid: 38af3491307f6ff489dc71aea769da7a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -58602,7 +58586,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6436187243710555255, guid: 38af3491307f6ff489dc71aea769da7a, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6436187243710555255, guid: 38af3491307f6ff489dc71aea769da7a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -58647,10 +58631,6 @@ PrefabInstance:
     - target: {fileID: 6694291701332606511, guid: 38af3491307f6ff489dc71aea769da7a, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 6814701073491863767, guid: 38af3491307f6ff489dc71aea769da7a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8811613767054594033, guid: 38af3491307f6ff489dc71aea769da7a, type: 3}
       propertyPath: m_AnchorMax.y
