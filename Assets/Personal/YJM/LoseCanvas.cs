@@ -14,6 +14,7 @@ public class LoseCanvas : MonoBehaviour
         StartCoroutine(FadeCoro());
         fadeImage.SetActive(true);
         button.SetActive(true);
+        Cursor.visible = true;
     }
 
     IEnumerator FadeCoro()
@@ -28,6 +29,7 @@ public class LoseCanvas : MonoBehaviour
 
     public void GoToLobbyScene()
     {
-        LoadSceneController.Instance.LoadScene(1);
+        Time.timeScale = 1f;
+        LoadSceneController.Instance.LoadScene(0);
     }
 }

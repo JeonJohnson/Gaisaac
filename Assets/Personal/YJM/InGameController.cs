@@ -33,6 +33,11 @@ public class InGameController : MonoBehaviour
 
     public PPController ppController;
 
+    private void Start()
+    {
+        Cursor.visible = false;
+    }
+
     private void Update()
     {
         if (!isEnd)
@@ -89,7 +94,7 @@ public class InGameController : MonoBehaviour
         }
 
 
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(0.2f);
 
         while(true)
         {
