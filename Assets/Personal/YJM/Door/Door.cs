@@ -12,10 +12,6 @@ public class Door : MonoBehaviour
     public void Open()
     {
         enterModel.SetActive(false);
-        if (InGameController.Instance.curRound == 2)
-        {
-            InGameController.Instance.bossHpBar.gameObject.SetActive(true);
-        }
     }
 
 
@@ -30,6 +26,10 @@ public class Door : MonoBehaviour
                 InGameController.Instance.rounds[InGameController.Instance.curRound].gameObject.SetActive(true);
                 InGameController.Instance.rounds[InGameController.Instance.curRound].Init();
                 InGameController.Instance.MiniMap.UpdateMiniMap(InGameController.Instance.curRound);
+                if (InGameController.Instance.curRound == 2)
+                {
+                    InGameController.Instance.bossHpBar.gameObject.SetActive(true);
+                }
             }
         }
     }

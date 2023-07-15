@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class InGameController : MonoBehaviour
 {
@@ -26,6 +28,10 @@ public class InGameController : MonoBehaviour
     public LoseCanvas loseCanvas;
 
     public Boss_HpBar bossHpBar;
+
+    public ItemPopUoWindow itemPopUpWindow;
+
+    public PPController ppController;
 
     private void Update()
     {
@@ -64,15 +70,41 @@ public class InGameController : MonoBehaviour
     IEnumerator SlowMotionCoro()
     {
         Time.timeScale = 0.1f;
-        yield return new WaitForSecondsRealtime(2f);
+
+        Bloom bloom;
+
+        float timer = 0f;
+        while (true)
+        {
+            yield return null;
+            timer += Time.unscaledDeltaTime;
+
+            if (ppController.volume.profile.TryGet(out bloom))
+                bloom.threshold.value = 0.9f - timer * 2;
+
+            if (timer > 1f)
+            {
+                break;
+            }
+        }
+
+
+        yield return new WaitForSecondsRealtime(1f);
 
         while(true)
         {
             yield return null;
+
+            if(bloom.threshold.value < 0.9f)
+            {
+                bloom.threshold.value += Time.unscaledDeltaTime * 2;
+            }
+
             Time.timeScale += Time.unscaledDeltaTime * 2f;
-            if(Time.timeScale > 1f)
+            if (Time.timeScale > 1f)
             {
                 Time.timeScale = 1f;
+                bloom.threshold.value = 0.9f;
                 yield break;
             }
         }
