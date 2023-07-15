@@ -49,6 +49,9 @@ public class InGameController : MonoBehaviour
                 {
                     isEnd = true;
                     winCanvas.Activate();
+
+                    ObjectManager.Instance.player.GodModeOn(100f);
+
                     Debug.Log("½Â¸®Ãâ·Â");
                 }
                 else

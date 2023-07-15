@@ -23,9 +23,15 @@ public class PlayerItem : MonoBehaviour
 
 	public List<string> itemName;
 	public List<string> explain;
+	public List<string> think;
 
 	public int count;
 
+	public void Start()
+	{
+		SetItemIcon(PlayerItemState.None);
+
+	}
 
 	public void SetItemIcon(PlayerItemState itemState)
 	{
@@ -46,10 +52,9 @@ public class PlayerItem : MonoBehaviour
 					player.itemIconSprite.sprite = iconList[(int)itemState - 1];
 					player.itemName.text = itemName[(int)itemState - 1];
 					player.itemExplain.text = explain[(int)itemState - 1];
+					player.itemThink = think[(int)itemState - 1];
 				}
 				break;
-
-
 		}
 	}
 
@@ -95,14 +100,14 @@ public class PlayerItem : MonoBehaviour
 
 			case PlayerItemState.God:
 				{
-					count = 10;
+					count = 5;
 					player.GodModeOn(count);
 				}
 				break;
 
 			case PlayerItemState.Dash:
 				{
-					count = 3;
+					count = Random.Range(5, 50);
 				}
 				break;
 			default:
@@ -145,10 +150,9 @@ public class PlayerItem : MonoBehaviour
 				break;
 			default:
 				break;
-
-				
 		}
 
+		SetItemIcon(PlayerItemState.None);
 		curState = PlayerItemState.None;
 	}
 	

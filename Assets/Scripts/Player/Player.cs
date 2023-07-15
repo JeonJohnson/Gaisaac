@@ -73,6 +73,8 @@ public class Player : MonoBehaviour
         }
 
         godCor = StartCoroutine(GodCoroutine(time));
+
+
     }
 
     public void GodModeOff()
@@ -81,6 +83,11 @@ public class Player : MonoBehaviour
         {
             StopCoroutine(godCor);
             bilnker.StopBlink();
+        }
+
+        if (itemSystem.curState == PlayerItemState.God)
+        {
+            itemSystem.ReturnNormal(PlayerItemState.God);
         }
 
         GodMode = false;
@@ -128,12 +135,15 @@ public class Player : MonoBehaviour
     [Header("UI")]
     public TextMeshProUGUI bulletCnt;
     public Image consumeGauge;
+    public TextMeshProUGUI godModeTxt;
+
 
     [Header("Item")]
     public GameObject itemIconHolder;
     public Image itemIconSprite;
     public TextMeshProUGUI itemName;
     public TextMeshProUGUI itemExplain;
+    public string itemThink;
 
 
     [Header("HP")]
@@ -182,15 +192,26 @@ public class Player : MonoBehaviour
         if (stat.curArmor > 0)
         {
             --stat.curArmor;
+
+            if (stat.curArmor == 0)
+            {
+                itemSystem.ReturnNormal(PlayerItemState.EquipArmor);
+            }
         }
         else
         {
             stat.curHp = Math.Clamp(stat.curHp - dmg, 0, stat.maxHp);
+            
+            UpdateHpUI();
 
             if (stat.curHp <= 0)
             {
                 if (itemSystem.curState == PlayerItemState.OneMoreChance)
                 {
+                    stat.curHp = stat.maxHp;
+
+                   
+
                     itemSystem.ReturnNormal(PlayerItemState.OneMoreChance);
                 }
                 else
@@ -198,6 +219,8 @@ public class Player : MonoBehaviour
                     isDead = true;
                 }
             }
+
+            UpdateHpUI();
         }
 	}
 
@@ -331,6 +354,12 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             --itemSystem.count;
+
+            if (itemSystem.count == 0)
+            {
+                itemSystem.ReturnNormal(PlayerItemState.Dash);
+            }
+
             return 10f;
         }
 
@@ -345,10 +374,10 @@ public class Player : MonoBehaviour
             {
                 Charging();
 
-                //Color temp = fovRdr.color;
-                //temp.a = 0;
-                //fovRdr.color = temp;
-            }
+				Color temp = Color.grey;
+				temp.a = 0.3f;
+                fovSRDR.color = temp;
+			}
         }
         else
         {
@@ -360,11 +389,12 @@ public class Player : MonoBehaviour
                 {
                     return;
                 }
-                //Color temp = fovRdr.color;
-                //temp.a = 0.5f;
-                //fovRdr.color = temp;
+				
+                Color temp = Color.green;
+				temp.a = 0.5f;
+                fovSRDR.color = temp;
 
-                stat.curConsumeRatio -= amount;
+				stat.curConsumeRatio -= amount;
                 stat.curConsumeRatio  = Mathf.Clamp(stat.curConsumeRatio, 0f, 1f);
 
                 var cols = Physics2D.OverlapCircleAll(transform.position, stat.consumeRange / 2f, LayerMask.GetMask("Bullet_Enemy", "Bullet_Boss"));
@@ -398,23 +428,16 @@ public class Player : MonoBehaviour
 							if (!script.isConsumed)
 							{ script.Consumed(this); }
 						}
-
-						//if (col.gameObject.activeSelf)
-						//{
-						//	col.gameObject.SetActive(false);
-						//	GameObject.Destroy(col.gameObject);
-						//	++stat.bulletCnt;
-						//}
-
 					}
 				}
             }
             else
             {
                 Charging();
-                //Color temp = fovRdr.color;
-                //temp.a = 0;
-                //fovRdr.color = temp;
+
+                Color temp = Color.grey;
+                temp.a = 0.3f;
+                fovSRDR.color = temp;
             }
         }
 
@@ -532,17 +555,13 @@ public class Player : MonoBehaviour
         UpdateHpUI();
 
 
-#if UNITY_EDITOR
-        if (Input.GetKey(KeyCode.LeftShift) )
+
+        if (Input.GetKeyDown(KeyCode.LeftShift)) 
         {
-            GodMode = true;
+            GodMode = !GodMode;
+            godModeTxt.gameObject.SetActive(GodMode);
         }
 
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            GodMode = false;
-        }
-#endif
     }
 
 	private void LateUpdate()
